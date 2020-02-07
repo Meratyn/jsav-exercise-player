@@ -1,0 +1,27 @@
+{
+  "name": "jsav-player-client",
+  "version": "1.0.0",
+  "description": "Application to replay algorithm visualization exercises",
+  "main": "player.js",
+  "scripts": {
+    "start": "nohup google-chrome player.html &>/dev/null &",
+    "test": "jest --watch --verbose",
+    "lint": "npx eslint --fix .",
+    "build": "browserify player.js > build/player-bundle.js"
+  },
+  "keywords": [
+    "jsav"
+  ],
+  "author": "Giacomo Mariani",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.1.0"
+  }
+}
