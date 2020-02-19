@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../styles/odsaAV-min.css" type="text/css" />
   <style>
     #jsavcontainer {
-      height: 530px;
+      height: 600px;
     }
     .jsavline {
       height: 38px;
@@ -18,8 +18,8 @@
       min-height: 200px;
     }
     .import-export, .final-grade, .jsavoutput, .play {
-    text-align: center;
-    margin: 5px;
+      text-align: center;
+      margin: 5px;
     }
     .jsavoutput .jsavtitle {
       margin: 5px;
@@ -44,6 +44,12 @@
       <div id="scores">
 
       </div>
+    </div>
+    <div class="play">
+      <div>
+        <label for="speed" id="speed-label"><b>Animation speed:</b></label>
+      </div>
+      <input type="range" name="speed" id="speed">
     </div>
     <div class="play">
       <input type="image" src="./img/play-button.png" alt="play-button">
