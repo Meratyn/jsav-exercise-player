@@ -11,7 +11,7 @@ function setAnimationSteps(av, submission) {
           alert(`Error handling click action: ${err.message} \n continuing with execution but shown animation 
           might not respond real submission`)   
         }
-        break
+        break;
       case "state-change":
         try {
           handleStateChange(av, step)
@@ -19,7 +19,15 @@ function setAnimationSteps(av, submission) {
           alert(`Error handling state change: ${err.message} \n continuing with execution but shown animation 
           might not respond real submission`)   
         }
-        break
+        break;
+      case "undo": 
+      try {
+        handleUndo(av, step)
+      } catch (err) {
+        alert(`Error handling undo: ${err.message} \n continuing with execution but shown animation 
+        might not respond real submission`)   
+      }
+      break;
       case "grade":
         try {
           handleGradeEvent(av, step)
@@ -27,7 +35,7 @@ function setAnimationSteps(av, submission) {
           alert(`Error handling grade event: ${err.message} \n continuing with execution but shown animation 
           might not respond real submission`)
         }
-        break
+        break;
       default:        
         throw new Error(`Unknown animation step type: ${JSON.stringify(step)}`)
     }
@@ -48,6 +56,11 @@ function handleClick(av, step) {
 function handleArrayClick(av, dataStructure, step) {   
   dataStructure.arr.highlight(step.index)
   av.step()
+}
+
+function handleUndo(av, step) {
+  av.umsg("Undo", {"color": "red"});
+  return handleStateChange(av, step);
 }
 
 function handleStateChange(av, step) {
@@ -76,7 +89,8 @@ function handleArrayStateChange(av, dataStructure, step) {
       dataStructure.arr.swap(i, j)
       dataStructure.arr.unhighlight(i)
       dataStructure.arr.unhighlight(j)
-      av.step()
+      av.step();
+      av.clearumsg();
       break
     default:
       dataStructure.arr.unhighlight()
@@ -92,13 +106,13 @@ function getArrayStateChangeType(oldState, newState) {
 }
 
 function handleGradeEvent(av, step)  {
-  av.umsg("Animation finished", {"color": "blue"});
+  av.umsg("Animation finished", {"color": "red"});
   Object.keys(step.score).forEach(key => {
     let span = document.createElement('span')
     span.innerText = `${key[0].toUpperCase()}${key.slice(1)}: ${step.score[key]} `
     document.getElementById('scores').appendChild(span)
   })
-  av.step()
+  av.step();
 }
 
 module.exports = {
