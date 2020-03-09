@@ -8,15 +8,22 @@ function setAnimationSteps(av, submission) {
         try {
           handleClick(av, step)
         } catch (err) {
-          alert(`Error handling click action: ${err.message} \n continuing with execution but shown animation 
+          console.warn(`Error handling click action: ${err.message} \n continuing with execution but shown animation 
           might not respond real submission`)   
+        }
+        break;
+      case String(step.type.match(/^model-.*/)):
+        try {
+          handleModelSolution(av, step)
+        } catch (err) {
+          console.warn(`Error when openening model solution window: ${err}`)
         }
         break;
       case "state-change":
         try {
           handleStateChange(av, step)
         } catch (err) {
-          alert(`Error handling state change: ${err.message} \n continuing with execution but shown animation 
+          console.warn(`Error handling state change: ${err.message} \n continuing with execution but shown animation 
           might not respond real submission`)   
         }
         break;
@@ -24,7 +31,7 @@ function setAnimationSteps(av, submission) {
       try {
         handleUndo(av, step)
       } catch (err) {
-        alert(`Error handling undo: ${err.message} \n continuing with execution but shown animation 
+        console.warn(`Error handling undo: ${err.message} \n continuing with execution but shown animation 
         might not respond real submission`)   
       }
       break;
@@ -32,7 +39,7 @@ function setAnimationSteps(av, submission) {
         try {
           handleGradeEvent(av, step)
         } catch (err) {
-          alert(`Error handling grade event: ${err.message} \n continuing with execution but shown animation 
+          console.warn(`Error handling grade event: ${err.message} \n continuing with execution but shown animation 
           might not respond real submission`)
         }
         break;
@@ -56,27 +63,6 @@ function handleClick(av, step) {
 function handleArrayClick(av, dataStructure, step) {   
   dataStructure.arr.highlight(step.index)
   av.step()
-}
-
-function handleUndo(av, step) {
-  av.umsg("Undo", {"color": "red"});
-  return handleStateChange(av, step);
-}
-
-function handleStateChange(av, step) {
-  const dataStructure = dataStructures.getDataStructure(step.dataStructureId)  
-  switch(dataStructure.type) {
-    case "array":
-      try {
-        handleArrayStateChange(av,dataStructure, step)
-      } catch (err) {
-        alert(`Error handling array state change: ${err.message} \n continuing with execution but shown animation 
-        might not respond real submission`)
-      }
-      break
-    default:
-      throw new Error(`Unknown data structure type: ${JSON.stringify(step)}`)
-  }
 }
 
 function handleArrayStateChange(av, dataStructure, step) {
@@ -105,6 +91,18 @@ function getArrayStateChangeType(oldState, newState) {
   return `Old state: ${oldState} \n New statea: ${newState}`
 }
 
+function handleModelSolution(av, step) {
+  switch(step.type) {
+    case "model-opened":
+      $('#model-solution')[0].innerHTML = step.state
+      av.umsg("Model answer opened", {"color": "blue"});
+      av.step();
+      break;
+    default:
+      
+  }
+}
+
 function handleGradeEvent(av, step)  {
   av.umsg("Animation finished", {"color": "red"});
   Object.keys(step.score).forEach(key => {
@@ -114,6 +112,28 @@ function handleGradeEvent(av, step)  {
   })
   av.step();
 }
+
+function handleStateChange(av, step) {
+  const dataStructure = dataStructures.getDataStructure(step.dataStructureId)  
+  switch(dataStructure.type) {
+    case "array":
+      try {
+        handleArrayStateChange(av,dataStructure, step)
+      } catch (err) {
+        console.warn(`Error handling array state change: ${err.message} \n continuing with execution but shown animation 
+        might not respond real submission`)
+      }
+      break
+    default:
+      throw new Error(`Unknown data structure type: ${JSON.stringify(step)}`)
+  }
+}
+
+function handleUndo(av, step) {
+  av.umsg("Undo", {"color": "red"});
+  return handleStateChange(av, step);
+}
+
 
 module.exports = {
   setAnimationSteps,
