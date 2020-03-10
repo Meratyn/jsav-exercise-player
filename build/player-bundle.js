@@ -276,63 +276,91 @@ const animation = require("./animation/animation")
 const rest = require("./rest/rest")
 
 async function initialize() {
-  const submission = await getSingleSubmission()
-  console.log(submission)
-  if(submission){
-    initiateAnimation(submission);
-  } else {
-    alert('No animation data received')
-  }
-}
-
-const getSingleSubmission = async () => {
-  const submissions = await rest.getSubmissions()
-  return submissions[submissions.length -1]
-}
-
-const initiateAnimation = (submission) => {
-  new JSAV.utils.Settings($('#settings'));
-  var avOptions = {
-    title: submission.definitions.options.title
-  }
-  const initilaHTML = submission.definitions.options.instructions;
-  document.getElementById("exercise-instructions").innerHTML = initilaHTML;
-  var av = new JSAV($("#jsavcontainer"), avOptions)
-  initialState.setInitialDataStructures(av, submission)
-  av.displayInit()
   try {
-    animation.setAnimationSteps(av, submission)
+    const submission = await getSingleSubmission()
+    if(submission){
+      initiateAnimation(submission);
+      setListeners();
+    } else {
+      alert('No animation data received')
+    }
   } catch (err) {
-    alert(`Error handling animation: ${err.message} \n continuing with execution but shown animation
-    might not respond real submission`)
-  }
-  av.recorded();
-}
-
-document.onkeydown = function(event) {
-  //let n = $('.jsavbackward').length -1
-  switch (event.keyCode) {
-    case 37:
-      $('.jsavbackward')[0].click()
-      break;
-    case 38:
-      $('.jsavbegin')[0].click()
-      break;
-    case 39:
-      $('.jsavforward')[0].click()
-      break;
-    case 40:
-      $('.jsavend')[0].click()
-      break;
+    alertAndLog(err)
   }
 }
 
-
-initialize()
-
-module.exports = {
-  initialize
+async function getSingleSubmission() {
+  try {
+    const submissions = await rest.getSubmissions();
+    return submissions[submissions.length -1]
+  } catch (err) {
+    throw err
+  }
 }
+
+function initiateAnimation(submission) {
+  try {
+    new JSAV.utils.Settings($('#settings'));
+    const instructions = submission.definitions.options.instructions;
+    const title = submission.definitions.options.title
+    $("#exercise-instructions").innerHTML = instructions;
+    let av = new JSAV($("#jsavcontainer"), { title: title })
+    initialState.setInitialDataStructures(av, submission)
+    av.displayInit();
+    animation.setAnimationSteps(av, submission)
+    av.recorded();
+  } catch (err) {
+    throw err
+  }
+}
+
+function setListeners() {
+  $("#play-button").on('click', startAutoAnimation)
+  document.onkeydown = function(event) {
+    //let n = $('.jsavbackward').length -1
+    switch (event.keyCode) {
+      case 37:
+        $('.jsavbackward')[0].click()
+        break;
+      case 38:
+        $('.jsavbegin')[0].click()
+        break;
+      case 39:
+        $('.jsavforward')[0].click()
+        break;
+      case 40:
+        $('.jsavend')[0].click()
+        break;
+    }
+  }
+}
+
+const startAutoAnimation = () => {
+  let animator = startAnimator()
+  $("#play-button").off('click', startAutoAnimation)
+  $("#play-button").on('click', () => {
+    clearInterval(animator)
+    $("#play-button").on('click', startAutoAnimation)
+  })
+}
+
+const startAnimator = () => {
+  return setInterval(myTimer, 1000);
+}
+
+const myTimer = () => {
+  $('.jsavforward')[0].click();
+}
+
+
+const alertAndLog = (error) => {
+  alert(`Error handling animation: ${error.message} \n continuing with execution but shown animation
+  might not respond real submission`);
+  console.warn(`Error handling animation: ${error.message} \n continuing with execution but shown animation
+  might not respond real submission`)
+}
+
+initialize();
 
 },{"./animation/animation":1,"./initialState/initialState":3,"./rest/rest":5}],5:[function(require,module,exports){
 const server = "http://localhost:3000/submissions"
