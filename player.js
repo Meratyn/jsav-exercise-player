@@ -31,14 +31,14 @@ const initiateAnimation = (submission) => {
   try {
     animation.setAnimationSteps(av, submission)
   } catch (err) {
-    alert(`Error handling animation: ${err.message} \n continuing with execution but shown animation 
-    might not respond real submission`)   
+    alert(`Error handling animation: ${err.message} \n continuing with execution but shown animation
+    might not respond real submission`)
   }
   av.recorded();
-  setMutationObserver($('.jsavoutput')[0]);
 }
 
 document.onkeydown = function(event) {
+  //let n = $('.jsavbackward').length -1
   switch (event.keyCode) {
     case 37:
       $('.jsavbackward')[0].click()
@@ -54,28 +54,6 @@ document.onkeydown = function(event) {
       break;
   }
 }
-
-const setMutationObserver = (targetNode) => {
-  const callback = function(mutationsList, observer) {
-    for(let mutation of mutationsList) {
-      if (mutation.type === 'childList') {
-          let text = mutation.target.firstChild.innerText || false;
-          console.log(text);
-          switch(text) {
-            case 'Model answer opened':
-              $('#model-solution')[0].style.display = 'block'
-              break;
-            default:
-              break;
-          }
-      }
-    }
-  }
-  const config = { childList: true, subtree: true };
-  const observer = new MutationObserver(callback);
-  observer.observe(targetNode, config);
-}
-
 
 
 initialize()

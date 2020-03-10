@@ -20,7 +20,7 @@
       min-height: 150px;
       margin: 5px;
     }
-    .import-export, .final-grade, .jsavoutput, .play, .animation-instructions {
+    .import-export, .final-grade, .jsavoutput, .play, .animation-instructions, .model-solution {
       text-align: center;
       margin: 2px;
     }
@@ -43,8 +43,8 @@
     p {
       margin: 5px !important;
     }
-    #model-solution {
-      
+    #model-solution path {
+    display: none;
     }
   </style>
 </head>
@@ -63,7 +63,6 @@
       <p>Key right = forward | key back = backward | Key up = begin | key down = end</p>
     </div>
   </div>
-  <div id="model-solution"></div>
   <div id="jsavcontainer">
     <div class="jsavcontrols"></div>
     <!-- <a class="jsavsettings" href="#">Settings</a> -->
@@ -76,6 +75,10 @@
       <div id="scores"></div>
     </div>
     <p class="jsavoutput jsavline"></p>
+  </div>
+  <div class="model-solution">
+    <h3>Here will be shown the model solution steps if they are present in the animation</h3>
+    <div id="model-solution"></div>
   </div>
 
   <script src="./lib/jquery.min.js"></script>

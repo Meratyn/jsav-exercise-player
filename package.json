@@ -4,7 +4,7 @@
   "description": "Application to replay algorithm visualization exercises",
   "main": "player.js",
   "scripts": {
-    "start": "nohup google-chrome player.html &>/dev/null &",
+    "start": "nohup chromium-browser player.html &>/dev/null &",
     "test": "jest --watch --verbose",
     "lint": "npx eslint --fix .",
     "build": "browserify player.js > build/player-bundle.js"
