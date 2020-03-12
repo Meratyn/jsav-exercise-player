@@ -1,4 +1,4 @@
-"use strict";
+let $ = window.$;
 
 const dataStructures = require("../dataStructures/dataStructures")
 const { getSwappedIndexes, isSwap } = require("../utils/helperFunctions")
@@ -180,31 +180,33 @@ const setMutationObserver = (targetNode) => {
             }
           }
         }
-        switch(text) {
-          case "Model solution opened":
-            msIndex = 0;
-            $('#model-solution')[0].innerHTML = modelSolution.begin
-            break;
-          case String(text.match(/.*forward.*\d*/)):
-            msIndex = parseInt(String(text.match(/\d+/))) -1;
-            $('#model-solution')[0].innerHTML = modelSolution.stepsForward[msIndex]
-            break;
-          case String(text.match(/.*backward.*\d*/)):
-            msIndex = parseInt(String(text.match(/\d+/))) -1;
-            $('#model-solution')[0].innerHTML = modelSolution.stepsBackward[msIndex]
-            break;
-          case String(text.match(/.*first step/)):
-            $('#model-solution')[0].innerHTML = modelSolution.begin
-            break;
-          case String(text.match(/.*last step/)):
-            $('#model-solution')[0].innerHTML = modelSolution.end;
-            break;
-          case "Model solution closed":
-            $('#model-solution')[0].innerHTML = "";
-            break;
-          default:
-            $('#model-solution')[0].innerHTML = "";
-            break;
+        if(text){
+          switch(text) {
+            case "Model solution opened":
+              msIndex = 0;
+              $('#model-solution')[0].innerHTML = modelSolution.begin
+              break;
+            case String(text.match(/.*forward.*\d*/)):
+              msIndex = parseInt(String(text.match(/\d+/))) -1;
+              $('#model-solution')[0].innerHTML = modelSolution.stepsForward[msIndex]
+              break;
+            case String(text.match(/.*backward.*\d*/)):
+              msIndex = parseInt(String(text.match(/\d+/))) -1;
+              $('#model-solution')[0].innerHTML = modelSolution.stepsBackward[msIndex]
+              break;
+            case String(text.match(/.*first step/)):
+              $('#model-solution')[0].innerHTML = modelSolution.begin
+              break;
+            case String(text.match(/.*last step/)):
+              $('#model-solution')[0].innerHTML = modelSolution.end;
+              break;
+            case "Model solution closed":
+              $('#model-solution')[0].innerHTML = "";
+              break;
+            default:
+              $('#model-solution')[0].innerHTML = "";
+              break;
+          }
         }
       }
     }

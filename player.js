@@ -1,16 +1,18 @@
-"use strict"
+let $ = window.$;
 const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
 const rest = require("./rest/rest")
 
-async function initialize() {
+async function initialize(JSAV, submission) {
   try {
-    const submission = await getSingleSubmission()
-    if(submission){
-      initiateAnimation(submission);
+    // if(!submission) {
+    //   submission = await getSingleSubmission()
+    // }
+    if(submission && Object.keys(submission).length > 0){
+      initiateAnimation(JSAV, submission);
       setListeners();
     } else {
-      alert('No animation data received')
+      console.warn('No animation data received')
     }
   } catch (err) {
     alertAndLog(err)
@@ -26,7 +28,7 @@ async function getSingleSubmission() {
   }
 }
 
-function initiateAnimation(submission) {
+function initiateAnimation(JSAV, submission) {
   try {
     new JSAV.utils.Settings($('#settings'));
     const instructions = submission.definitions.options.instructions;
@@ -38,12 +40,13 @@ function initiateAnimation(submission) {
     animation.setAnimationSteps(av, submission)
     av.recorded();
   } catch (err) {
+    console.warn(err)
     throw err
   }
 }
 
 function setListeners() {
-  $("#play-button").on('click', startAutoAnimation)
+  // $("#play-button").on('click', startAutoAnimation)
   document.onkeydown = function(event) {
     //let n = $('.jsavbackward').length -1
     switch (event.keyCode) {
@@ -66,6 +69,7 @@ function setListeners() {
 const startAutoAnimation = () => {
   let animator = startAnimator()
   $("#play-button").off('click', startAutoAnimation)
+  $('.jsavbegin')[0].click()
   $("#play-button").on('click', () => {
     clearInterval(animator)
     $("#play-button").on('click', startAutoAnimation)
@@ -82,10 +86,15 @@ const myTimer = () => {
 
 
 const alertAndLog = (error) => {
-  alert(`Error handling animation: ${error.message} \n continuing with execution but shown animation
+  alert(`Error handling animation: ${error.message} \n continuing with execution but the shown animation
   might not respond real submission`);
   console.warn(`Error handling animation: ${error.message} \n continuing with execution but shown animation
   might not respond real submission`)
 }
 
-initialize();
+// initialize();
+
+let player = {
+  initialize
+}
+export default player;
