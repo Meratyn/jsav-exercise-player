@@ -2,15 +2,16 @@ const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
 const dataStructures = require("./dataStructures/dataStructures")
 const rest = require("./rest/rest")
+const env = require('./.env.js');
 let $ = window.$;
 // let JSAV = window.JSAV;
 // let submission = window.submission;
 
 async function initialize(JSAV, submission) {
   try {
-    // if(!submission) {
-    //   submission = await getSingleSubmission()
-    // }
+    if(!submission) {
+      submission = await getSingleSubmission()
+    }
     if(submission && Object.keys(submission).length > 0){
       initiateAnimation(JSAV, submission);
       setListeners();
@@ -100,7 +101,10 @@ const alertAndLog = (error) => {
   might not respond real submission`)
 }
 
-initialize(window.JSAV, window.submission);
+if(EXEC_ENV === 'STATIC') {
+  initialize(window.JSAV, window.submission);
+}
+
 
 window.initializeAnimation = initialize;
 window.resetAnimationData = dataStructures.reset;

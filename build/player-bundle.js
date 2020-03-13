@@ -1,4 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+EXEC_ENV = 'STATIC'
+
+},{}],2:[function(require,module,exports){
 let $ = window.$;
 
 const dataStructures = require("../dataStructures/dataStructures")
@@ -231,7 +234,7 @@ module.exports = {
   setAnimationSteps,
 }
 
-},{"../dataStructures/dataStructures":2,"../utils/helperFunctions":6}],2:[function(require,module,exports){
+},{"../dataStructures/dataStructures":3,"../utils/helperFunctions":7}],3:[function(require,module,exports){
 const dataStructures = []
 
 function addArray(submissionId, arr) {
@@ -256,7 +259,7 @@ module.exports = {
   reset
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 const dataStructures = require("../dataStructures/dataStructures")
 
 function setInitialDataStructures (av, submission) {
@@ -281,20 +284,21 @@ module.exports = {
   setInitialDataStructures
 }
 
-},{"../dataStructures/dataStructures":2}],4:[function(require,module,exports){
+},{"../dataStructures/dataStructures":3}],5:[function(require,module,exports){
 const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
 const dataStructures = require("./dataStructures/dataStructures")
 const rest = require("./rest/rest")
+const env = require('./.env.js');
 let $ = window.$;
 // let JSAV = window.JSAV;
 // let submission = window.submission;
 
 async function initialize(JSAV, submission) {
   try {
-    // if(!submission) {
-    //   submission = await getSingleSubmission()
-    // }
+    if(!submission) {
+      submission = await getSingleSubmission()
+    }
     if(submission && Object.keys(submission).length > 0){
       initiateAnimation(JSAV, submission);
       setListeners();
@@ -384,7 +388,10 @@ const alertAndLog = (error) => {
   might not respond real submission`)
 }
 
-initialize(window.JSAV, window.submission);
+if(EXEC_ENV === 'STATIC') {
+  initialize(window.JSAV, window.submission);
+}
+
 
 window.initializeAnimation = initialize;
 window.resetAnimationData = dataStructures.reset;
@@ -398,7 +405,7 @@ module.exports = {
 // }
 // export default player;
 
-},{"./animation/animation":1,"./dataStructures/dataStructures":2,"./initialState/initialState":3,"./rest/rest":5}],5:[function(require,module,exports){
+},{"./.env.js":1,"./animation/animation":2,"./dataStructures/dataStructures":3,"./initialState/initialState":4,"./rest/rest":6}],6:[function(require,module,exports){
 const server = "http://localhost:3000/submissions"
 
 async function getSubmissions () {  
@@ -410,7 +417,7 @@ const rest = { getSubmissions }
 
 module.exports = rest
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 function getSwappedIndexes(oldState, newState) {
   const swappedIndices = []
   newState.forEach((v,i) => {
@@ -433,4 +440,4 @@ module.exports = {
   getSwappedIndexes,
   isSwap
 }
-},{}]},{},[4]);
+},{}]},{},[5]);

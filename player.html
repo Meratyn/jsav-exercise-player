@@ -5,53 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Visual Algorithm Simulatin Player</title>
-  <link rel="stylesheet" href="../lib/JSAV.css" type="text/css" />
-  <style>
-    #jsavcontainer {
-      height: 500px;
-      border: khaki 2px solid;
-      margin-top: 10px;
-      padding-top: 10px;
-    }
-    .jsavline {
-      height: 38px;
-    }
-    .jsavcanvas {
-      min-height: 150px;
-      margin: 5px;
-    }
-    .import-export, .final-grade, .jsavoutput, .play, .animation-instructions, .model-solution {
-      text-align: center;
-      margin: 2px;
-    }
-    .jsavoutput .jsavtitle {
-      margin: 5px;
-    }
-    .jsavtitle {
-      margin-bottom: 10px !important;
-      font-size: xx-large !important;
-    }
-    .instructions-div {
-      margin: 2px 20%;
-      background-color: lightblue;
-      padding: 1px 10px;
-      border-radius: 5px;
-    }
-    button {
-      margin: 0.5%;
-    }
-    p {
-      margin: 5px !important;
-    }
-    #model-solution path {
-    display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="./styles/JSAV.css" type="text/css" />
+  <link rel="stylesheet" href="./styles/player.css" type="text/css" />
+
 </head>
 <body>
   <div class="player-content">
-    <div class="play">
-      <input id="play-button" type="image" src="./img/play-button.png" alt="play-button">
+    <div class="auto-animation">
+      <button id="play-button">Play</button>
+      <button id="pause-button">Pause</button>
+      <button id="stop-button">Stop</button>
     </div>
     <div class="import-export">
       <button id="settings">Animation Speed</button>
@@ -59,8 +22,8 @@
       <button>Export Animation</button>
     </div>
     <div class="animation-instructions">
-      <p>Press the arrows or use your keyboard arrow buttons to go through the animation</p>
-      <p>Key right = forward | key back = backward | Key up = begin | key down = end</p>
+      <p>Click the <b>arrows</b> buttons or use your <b>keyboard</b> to step through the animation</p>
+      <p><b>Key right = forward</b> | <b>key back = backward</b> | <b>Key up = begin</b> | <b>key down = end</b></p>
     </div>
   </div>
   <div id="jsavcontainer">
