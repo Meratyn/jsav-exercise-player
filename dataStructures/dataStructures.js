@@ -1,9 +1,9 @@
 const dataStructures = []
 
 function addArray(submissionId, arr) {
-  dataStructures.push({ 
+  dataStructures.push({
     type: "array",
-    submissionId, 
+    submissionId,
     arr })
 }
 
@@ -12,6 +12,7 @@ function getDataStructure(submissionId) {
 }
 
 function reset() {
+  console.warn('Clearing animation data structures');
   dataStructures.forEach((e) => dataStructures.pop())
 }
 

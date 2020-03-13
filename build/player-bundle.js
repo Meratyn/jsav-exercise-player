@@ -1,5 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-"use strict";
+let $ = window.$;
 
 const dataStructures = require("../dataStructures/dataStructures")
 const { getSwappedIndexes, isSwap } = require("../utils/helperFunctions")
@@ -151,7 +151,7 @@ function handleStateChange(av, step) {
   switch(dataStructure.type) {
     case "array":
       try {
-        handleArrayStateChange(av,dataStructure, step)
+        handleArrayStateChange(av, dataStructure, step)
       } catch (err) {
         console.warn(`Error handling array state change: ${err.message} \n continuing with execution but shown animation
         might not respond real submission`)
@@ -181,31 +181,39 @@ const setMutationObserver = (targetNode) => {
             }
           }
         }
-        switch(text) {
-          case "Model solution opened":
-            msIndex = 0;
-            $('#model-solution')[0].innerHTML = modelSolution.begin
-            break;
-          case String(text.match(/.*forward.*\d*/)):
-            msIndex = parseInt(String(text.match(/\d+/))) -1;
-            $('#model-solution')[0].innerHTML = modelSolution.stepsForward[msIndex]
-            break;
-          case String(text.match(/.*backward.*\d*/)):
-            msIndex = parseInt(String(text.match(/\d+/))) -1;
-            $('#model-solution')[0].innerHTML = modelSolution.stepsBackward[msIndex]
-            break;
-          case String(text.match(/.*first step/)):
-            $('#model-solution')[0].innerHTML = modelSolution.begin
-            break;
-          case String(text.match(/.*last step/)):
-            $('#model-solution')[0].innerHTML = modelSolution.end;
-            break;
-          case "Model solution closed":
-            $('#model-solution')[0].innerHTML = "";
-            break;
-          default:
-            $('#model-solution')[0].innerHTML = "";
-            break;
+        if(text){
+          switch(text) {
+            case "Model solution opened":
+              msIndex = 0;
+              $('#model-solution')[0].innerHTML = modelSolution.begin
+              break;
+            case String(text.match(/.*forward.*\d*/)):
+              msIndex = parseInt(String(text.match(/\d+/))) -1;
+              $('#model-solution')[0].innerHTML = modelSolution.stepsForward[msIndex]
+              break;
+            case String(text.match(/.*backward.*\d*/)):
+              msIndex = parseInt(String(text.match(/\d+/))) -1;
+              $('#model-solution')[0].innerHTML = modelSolution.stepsBackward[msIndex]
+              break;
+            case String(text.match(/.*first step/)):
+              $('#model-solution')[0].innerHTML = modelSolution.begin
+              break;
+            case String(text.match(/.*last step/)):
+              $('#model-solution')[0].innerHTML = modelSolution.end;
+              break;
+            case "Model solution closed":
+              $('#model-solution')[0].innerHTML = "";
+              break;
+            case "Animation finished":
+              let stopButton = $('#pause-button')[0]
+              if(stopButton) {
+                stopButton.click();
+              }
+              break;
+            default:
+              $('#model-solution')[0].innerHTML = "";
+              break;
+          }
         }
       }
     }
@@ -215,6 +223,9 @@ const setMutationObserver = (targetNode) => {
   observer.observe(targetNode, config);
 }
 
+// export default {
+//   setAnimationSteps
+// }
 
 module.exports = {
   setAnimationSteps,
@@ -224,9 +235,9 @@ module.exports = {
 const dataStructures = []
 
 function addArray(submissionId, arr) {
-  dataStructures.push({ 
+  dataStructures.push({
     type: "array",
-    submissionId, 
+    submissionId,
     arr })
 }
 
@@ -235,6 +246,7 @@ function getDataStructure(submissionId) {
 }
 
 function reset() {
+  console.warn('Clearing animation data structures');
   dataStructures.forEach((e) => dataStructures.pop())
 }
 
@@ -270,19 +282,24 @@ module.exports = {
 }
 
 },{"../dataStructures/dataStructures":2}],4:[function(require,module,exports){
-"use strict"
 const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
+const dataStructures = require("./dataStructures/dataStructures")
 const rest = require("./rest/rest")
+let $ = window.$;
+// let JSAV = window.JSAV;
+// let submission = window.submission;
 
-async function initialize() {
+async function initialize(JSAV, submission) {
   try {
-    const submission = await getSingleSubmission()
-    if(submission){
-      initiateAnimation(submission);
+    // if(!submission) {
+    //   submission = await getSingleSubmission()
+    // }
+    if(submission && Object.keys(submission).length > 0){
+      initiateAnimation(JSAV, submission);
       setListeners();
     } else {
-      alert('No animation data received')
+      console.warn('No animation data received')
     }
   } catch (err) {
     alertAndLog(err)
@@ -298,7 +315,7 @@ async function getSingleSubmission() {
   }
 }
 
-function initiateAnimation(submission) {
+function initiateAnimation(JSAV, submission) {
   try {
     new JSAV.utils.Settings($('#settings'));
     const instructions = submission.definitions.options.instructions;
@@ -310,6 +327,7 @@ function initiateAnimation(submission) {
     animation.setAnimationSteps(av, submission)
     av.recorded();
   } catch (err) {
+    console.warn(err)
     throw err
   }
 }
@@ -338,31 +356,49 @@ function setListeners() {
 const startAutoAnimation = () => {
   let animator = startAnimator()
   $("#play-button").off('click', startAutoAnimation)
-  $("#play-button").on('click', () => {
+  $('.jsavforward')[0].click()
+  $("#stop-button").on('click', () => {
+    clearInterval(animator)
+    $('.jsavbegin')[0].click();
+    $("#play-button").on('click', startAutoAnimation)
+  })
+  $("#pause-button").on('click', () => {
     clearInterval(animator)
     $("#play-button").on('click', startAutoAnimation)
   })
 }
 
 const startAnimator = () => {
-  return setInterval(myTimer, 1000);
+  return setInterval(timedAction, 1000);
 }
 
-const myTimer = () => {
+const timedAction = () => {
   $('.jsavforward')[0].click();
 }
 
 
 const alertAndLog = (error) => {
-  alert(`Error handling animation: ${error.message} \n continuing with execution but shown animation
+  alert(`Error handling animation: ${error.message} \n continuing with execution but the shown animation
   might not respond real submission`);
   console.warn(`Error handling animation: ${error.message} \n continuing with execution but shown animation
   might not respond real submission`)
 }
 
-initialize();
+initialize(window.JSAV, window.submission);
 
-},{"./animation/animation":1,"./initialState/initialState":3,"./rest/rest":5}],5:[function(require,module,exports){
+window.initializeAnimation = initialize;
+window.resetAnimationData = dataStructures.reset;
+
+module.exports = {
+  initialize
+}
+
+// let player = {
+//   initialize
+// }
+// export default player;
+
+},{"./animation/animation":1,"./dataStructures/dataStructures":2,"./initialState/initialState":3,"./rest/rest":5}],5:[function(require,module,exports){
 const server = "http://localhost:3000/submissions"
 
 async function getSubmissions () {  

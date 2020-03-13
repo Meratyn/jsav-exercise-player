@@ -1,7 +1,10 @@
-let $ = window.$;
 const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
+const dataStructures = require("./dataStructures/dataStructures")
 const rest = require("./rest/rest")
+let $ = window.$;
+// let JSAV = window.JSAV;
+// let submission = window.submission;
 
 async function initialize(JSAV, submission) {
   try {
@@ -46,7 +49,7 @@ function initiateAnimation(JSAV, submission) {
 }
 
 function setListeners() {
-  // $("#play-button").on('click', startAutoAnimation)
+  $("#play-button").on('click', startAutoAnimation)
   document.onkeydown = function(event) {
     //let n = $('.jsavbackward').length -1
     switch (event.keyCode) {
@@ -69,18 +72,23 @@ function setListeners() {
 const startAutoAnimation = () => {
   let animator = startAnimator()
   $("#play-button").off('click', startAutoAnimation)
-  $('.jsavbegin')[0].click()
-  $("#play-button").on('click', () => {
+  $('.jsavforward')[0].click()
+  $("#stop-button").on('click', () => {
+    clearInterval(animator)
+    $('.jsavbegin')[0].click();
+    $("#play-button").on('click', startAutoAnimation)
+  })
+  $("#pause-button").on('click', () => {
     clearInterval(animator)
     $("#play-button").on('click', startAutoAnimation)
   })
 }
 
 const startAnimator = () => {
-  return setInterval(myTimer, 1000);
+  return setInterval(timedAction, 1000);
 }
 
-const myTimer = () => {
+const timedAction = () => {
   $('.jsavforward')[0].click();
 }
 
@@ -92,9 +100,16 @@ const alertAndLog = (error) => {
   might not respond real submission`)
 }
 
-// initialize();
+initialize(window.JSAV, window.submission);
 
-let player = {
+window.initializeAnimation = initialize;
+window.resetAnimationData = dataStructures.reset;
+
+module.exports = {
   initialize
 }
-export default player;
+
+// let player = {
+//   initialize
+// }
+// export default player;

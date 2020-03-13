@@ -150,7 +150,7 @@ function handleStateChange(av, step) {
   switch(dataStructure.type) {
     case "array":
       try {
-        handleArrayStateChange(av,dataStructure, step)
+        handleArrayStateChange(av, dataStructure, step)
       } catch (err) {
         console.warn(`Error handling array state change: ${err.message} \n continuing with execution but shown animation
         might not respond real submission`)
@@ -203,6 +203,12 @@ const setMutationObserver = (targetNode) => {
             case "Model solution closed":
               $('#model-solution')[0].innerHTML = "";
               break;
+            case "Animation finished":
+              let stopButton = $('#pause-button')[0]
+              if(stopButton) {
+                stopButton.click();
+              }
+              break;
             default:
               $('#model-solution')[0].innerHTML = "";
               break;
@@ -216,6 +222,9 @@ const setMutationObserver = (targetNode) => {
   observer.observe(targetNode, config);
 }
 
+// export default {
+//   setAnimationSteps
+// }
 
 module.exports = {
   setAnimationSteps,
