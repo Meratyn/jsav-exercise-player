@@ -4,11 +4,12 @@ const dataStructures = require("./dataStructures/dataStructures")
 const rest = require("./rest/rest")
 const env = require('./.env.js');
 let $ = window.$;
-// let JSAV = window.JSAV;
-// let submission = window.submission;
 
 async function initialize(JSAV) {
+  let message = env.SUBMISSION_URL ? `Fetching submission data from server`
+  : `No server url provided, reading submission data from window global object`;
   try {
+    console.warn(message);
     let submission = env.SUBMISSION_URL ? await getSingleSubmission(env.SUBMISSION_URL)
     : window.submission
     if(submission && Object.keys(submission).length > 0){
@@ -27,7 +28,7 @@ async function getSingleSubmission(url) {
     const submissions = await rest.getSubmissions(url);
     return submissions[submissions.length -1]
   } catch (err) {
-    throw new Error(` Failed getting submission from address ${urk}: ${err}`)
+    throw new Error(` Failed getting submission from address ${url}: ${err}`)
   }
 }
 
