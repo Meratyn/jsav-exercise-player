@@ -1,5 +1,11 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-EXEC_ENV = 'STATIC'
+const EXEC_ENV = 'DYNAMIC';
+const SUBMISSION_URL = '';
+
+module.exports = {
+  EXEC_ENV,
+  SUBMISSION_URL,
+}
 
 },{}],2:[function(require,module,exports){
 let $ = window.$;
@@ -294,11 +300,10 @@ let $ = window.$;
 // let JSAV = window.JSAV;
 // let submission = window.submission;
 
-async function initialize(JSAV, submission) {
+async function initialize(JSAV) {
   try {
-    if(!submission) {
-      submission = await getSingleSubmission()
-    }
+    let submission = env.SUBMISSION_URL ? await getSingleSubmission(env.SUBMISSION_URL)
+    : window.submission
     if(submission && Object.keys(submission).length > 0){
       initiateAnimation(JSAV, submission);
       setListeners();
@@ -310,12 +315,12 @@ async function initialize(JSAV, submission) {
   }
 }
 
-async function getSingleSubmission() {
+async function getSingleSubmission(url) {
   try {
-    const submissions = await rest.getSubmissions();
+    const submissions = await rest.getSubmissions(url);
     return submissions[submissions.length -1]
   } catch (err) {
-    throw err
+    throw new Error(` Failed getting submission from address ${urk}: ${err}`)
   }
 }
 
@@ -388,7 +393,7 @@ const alertAndLog = (error) => {
   might not respond real submission`)
 }
 
-if(EXEC_ENV === 'STATIC') {
+if(env.EXEC_ENV === 'STATIC') {
   initialize(window.JSAV, window.submission);
 }
 

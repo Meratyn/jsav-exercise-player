@@ -7,11 +7,10 @@ let $ = window.$;
 // let JSAV = window.JSAV;
 // let submission = window.submission;
 
-async function initialize(JSAV, submission) {
+async function initialize(JSAV) {
   try {
-    if(!submission) {
-      submission = await getSingleSubmission()
-    }
+    let submission = env.SUBMISSION_URL ? await getSingleSubmission(env.SUBMISSION_URL)
+    : window.submission
     if(submission && Object.keys(submission).length > 0){
       initiateAnimation(JSAV, submission);
       setListeners();
@@ -23,12 +22,12 @@ async function initialize(JSAV, submission) {
   }
 }
 
-async function getSingleSubmission() {
+async function getSingleSubmission(url) {
   try {
-    const submissions = await rest.getSubmissions();
+    const submissions = await rest.getSubmissions(url);
     return submissions[submissions.length -1]
   } catch (err) {
-    throw err
+    throw new Error(` Failed getting submission from address ${urk}: ${err}`)
   }
 }
 
@@ -101,7 +100,7 @@ const alertAndLog = (error) => {
   might not respond real submission`)
 }
 
-if(EXEC_ENV === 'STATIC') {
+if(env.EXEC_ENV === 'STATIC') {
   initialize(window.JSAV, window.submission);
 }
 
