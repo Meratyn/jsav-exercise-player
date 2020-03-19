@@ -204,7 +204,7 @@ const setMutationObserver = (targetNode) => {
               $('#model-solution')[0].innerHTML = "";
               break;
             case "Animation finished":
-              let stopButton = $('#stop-button')[0]
+              let stopButton = $('#pause-button')[0]
               if(stopButton) {
                 setTimeout(() => stopButton.click(), 2000);
               }

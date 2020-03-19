@@ -214,7 +214,7 @@ const setMutationObserver = (targetNode) => {
               $('#model-solution')[0].innerHTML = "";
               break;
             case "Animation finished":
-              let stopButton = $('#stop-button')[0]
+              let stopButton = $('#pause-button')[0]
               if(stopButton) {
                 setTimeout(() => stopButton.click(), 2000);
               }
@@ -367,7 +367,7 @@ const startAutoAnimation = () => {
   let animator = startAnimator()
   $("#play-button").off('click', startAutoAnimation)
   $('.jsavforward')[0].click()
-  $("#stop-button").on('click', () => {
+  $("#reset-button").on('click', () => {
     clearInterval(animator)
     $('.jsavbegin')[0].click();
     $("#play-button").on('click', startAutoAnimation)

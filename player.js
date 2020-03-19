@@ -74,7 +74,7 @@ const startAutoAnimation = () => {
   let animator = startAnimator()
   $("#play-button").off('click', startAutoAnimation)
   $('.jsavforward')[0].click()
-  $("#stop-button").on('click', () => {
+  $("#reset-button").on('click', () => {
     clearInterval(animator)
     $('.jsavbegin')[0].click();
     $("#play-button").on('click', startAutoAnimation)
