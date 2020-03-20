@@ -7,7 +7,12 @@
   <title>Visual Algorithm Simulatin Player</title>
   <link rel="stylesheet" href="./styles/JSAV.css" type="text/css" />
   <link rel="stylesheet" href="./styles/player.css" type="text/css" />
-
+  <script src="./lib/jquery.min.js"></script>
+  <script src="./lib/jquery-ui.min.js"></script>
+  <script src="./lib/jquery.transit.js"></script>
+  <script src="./lib/raphael.js"></script>
+  <script src="./lib/JSAV-min.js"></script>
+  <script src="./build/player-bundle.js"></script>
 </head>
 <body>
   <div class="player-content">
@@ -28,7 +33,6 @@
   </div>
   <div id="jsavcontainer">
     <div class="jsavcontrols"></div>
-    <!-- <a class="jsavsettings" href="#">Settings</a> -->
     <div class="instructions-div">
       <p class="instructLabel">Instructions:</p>
       <p class="instructions" id="exercise-instructions"></p>
@@ -43,12 +47,5 @@
     <h3>Here will be shown the model solution steps if they are present in the animation</h3>
     <div id="model-solution"></div>
   </div>
-
-  <script src="./lib/jquery.min.js"></script>
-  <script src="./lib/jquery-ui.min.js"></script>
-  <script src="./lib/jquery.transit.js"></script>
-  <script src="./lib/raphael.js"></script>
-  <script src="./lib/JSAV-min.js"></script>
-  <script src="./build/player-bundle.js"></script>
 </body>
 </html>

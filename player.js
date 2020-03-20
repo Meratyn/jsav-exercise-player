@@ -6,12 +6,14 @@ const env = require('./.env.js');
 let $ = window.$;
 
 async function initialize(JSAV) {
-  let message = env.SUBMISSION_URL ? `Fetching submission data from server`
-  : `No server url provided, reading submission data from window global object`;
+  // let message = env.SUBMISSION_URL ? `Fetching submission data from server`
+  // : `No server url provided, reading submission data from window global object`;
   try {
-    console.warn(message);
-    let submission = env.SUBMISSION_URL ? await getSingleSubmission(env.SUBMISSION_URL)
-    : window.submission
+    // console.warn(message);
+    // let submission = env.SUBMISSION_URL ? await getSingleSubmission(env.SUBMISSION_URL)
+    // : window.submission
+    let submission = JSON.parse(new URL(location.href).searchParams.get('submission'))
+    console.log('submission', submission);
     if(submission && Object.keys(submission).length > 0){
       initiateAnimation(JSAV, submission);
       setListeners();
