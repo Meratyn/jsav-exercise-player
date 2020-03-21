@@ -1,6 +1,5 @@
 // const base64 = require('base-64');
 const base64 = require("safe-base64");
-const utf8 = require('utf8');
 const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
 const dataStructures = require("./dataStructures/dataStructures")
