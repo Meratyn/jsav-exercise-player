@@ -1,3 +1,6 @@
+// const base64 = require('base-64');
+const base64 = require("safe-base64");
+const utf8 = require('utf8');
 const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
 const dataStructures = require("./dataStructures/dataStructures")
@@ -5,15 +8,15 @@ const rest = require("./rest/rest")
 const env = require('./.env.js');
 let $ = window.$;
 
+initialize(window.JSAV);
+
 async function initialize(JSAV) {
-  // let message = env.SUBMISSION_URL ? `Fetching submission data from server`
-  // : `No server url provided, reading submission data from window global object`;
   try {
-    // console.warn(message);
-    // let submission = env.SUBMISSION_URL ? await getSingleSubmission(env.SUBMISSION_URL)
-    // : window.submission
-    let submission = JSON.parse(new URL(window.location.href).searchParams.get('submission'))
-    console.log('submission', submission);
+    let url = new URL(window.location.href)
+    let encodedData = url.searchParams.get('submission')
+    let buffer = base64.decode(encodedData);
+    let str = buffer.toString()
+    let submission = JSON.parse(str);
     if(submission && Object.keys(submission).length > 0){
       initiateAnimation(JSAV, submission);
       setListeners();
@@ -21,7 +24,7 @@ async function initialize(JSAV) {
       console.warn('No animation data received')
     }
   } catch (err) {
-    alertAndLog(err)
+    console.warn(err)
   }
 }
 
@@ -96,17 +99,12 @@ const timedAction = () => {
 }
 
 
-const alertAndLog = (error) => {
-  alert(`Error handling animation: ${error.message} \n continuing with execution but the shown animation
-  might not respond real submission`);
-  console.warn(`Error handling animation: ${error.message} \n continuing with execution but shown animation
-  might not respond real submission`)
-}
-
-if(env.EXEC_ENV === 'STATIC') {
-  initialize(window.JSAV, window.submission);
-}
-
+// const alertAndLog = (error) => {
+//   alert(`Error handling animation: ${error.message} \n continuing with execution but the shown animation
+//   might not respond real submission`);
+//   console.warn(`Error handling animation: ${error.message} \n continuing with execution but shown animation
+//   might not respond real submission`)
+// }
 
 window.initializeAnimation = initialize;
 window.resetAnimationData = dataStructures.reset;
