@@ -1,9 +1,8 @@
 // const base64 = require('base-64');
-const base64 = require("safe-base64");
 const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
 const dataStructures = require("./dataStructures/dataStructures")
-const rest = require("./rest/rest")
+const helpers = require("./utils/helperFunctions.js")
 const env = require('./.env.js');
 let $ = window.$;
 
@@ -11,11 +10,12 @@ initialize(window.JSAV);
 
 async function initialize(JSAV) {
   try {
-    let url = new URL(window.location.href)
-    let encodedData = url.searchParams.get('submission')
-    let buffer = base64.decode(encodedData);
-    let str = buffer.toString()
-    let submission = JSON.parse(str);
+    // let deflatedData = window.location.search.replace('?submission=', '');
+    // let buffer;
+    // try { buffer = Buffer.from(deflatedData, 'base64') }
+    // catch(err) { console.warn(err) }
+    // let submission = JSON.parse(helpers.inflateToAscii(buffer));
+    let submission = await getSubmission();
     if(submission && Object.keys(submission).length > 0){
       initiateAnimation(JSAV, submission);
       setListeners();
@@ -27,14 +27,18 @@ async function initialize(JSAV) {
   }
 }
 
-async function getSingleSubmission(url) {
+async function getSubmission() {
   try {
-    const submissions = await rest.getSubmissions(url);
-    return submissions[submissions.length -1]
+    const parsedUrl = new URL(window.location.href);
+    const url = decodeURI(parsedUrl.searchParams.get("submission"));
+    const response = await fetch(url)
+    const submission = response.json();
+    return submission;
   } catch (err) {
     throw new Error(` Failed getting submission from address ${url}: ${err}`)
   }
 }
+
 
 function initiateAnimation(JSAV, submission) {
   try {
@@ -53,10 +57,33 @@ function initiateAnimation(JSAV, submission) {
   }
 }
 
+function startAutoAnimation() {
+  let animator = startAnimator()
+  $("#play-button").off('click', startAutoAnimation)
+  $('.jsavforward')[0].click()
+  $("#reset-button").on('click', () => {
+    clearInterval(animator)
+    $('.jsavbegin')[0].click();
+    $("#play-button").on('click', startAutoAnimation)
+  })
+  $("#pause-button").on('click', () => {
+    clearInterval(animator)
+    $("#play-button").on('click', startAutoAnimation)
+  })
+}
+
+function startAnimator() {
+  return setInterval(timedAction, 1000);
+}
+
+function timedAction() {
+  $('.jsavforward')[0].click();
+}
+
 function setListeners() {
+  $('#jsavcontainer').click();
   $("#play-button").on('click', startAutoAnimation)
   document.onkeydown = function(event) {
-    //let n = $('.jsavbackward').length -1
     switch (event.keyCode) {
       case 37:
         $('.jsavbackward')[0].click()
@@ -74,45 +101,9 @@ function setListeners() {
   }
 }
 
-const startAutoAnimation = () => {
-  let animator = startAnimator()
-  $("#play-button").off('click', startAutoAnimation)
-  $('.jsavforward')[0].click()
-  $("#reset-button").on('click', () => {
-    clearInterval(animator)
-    $('.jsavbegin')[0].click();
-    $("#play-button").on('click', startAutoAnimation)
-  })
-  $("#pause-button").on('click', () => {
-    clearInterval(animator)
-    $("#play-button").on('click', startAutoAnimation)
-  })
-}
-
-const startAnimator = () => {
-  return setInterval(timedAction, 1000);
-}
-
-const timedAction = () => {
-  $('.jsavforward')[0].click();
-}
-
-
-// const alertAndLog = (error) => {
-//   alert(`Error handling animation: ${error.message} \n continuing with execution but the shown animation
-//   might not respond real submission`);
-//   console.warn(`Error handling animation: ${error.message} \n continuing with execution but shown animation
-//   might not respond real submission`)
-// }
-
 window.initializeAnimation = initialize;
 window.resetAnimationData = dataStructures.reset;
 
 module.exports = {
   initialize
 }
-
-// let player = {
-//   initialize
-// }
-// export default player;
