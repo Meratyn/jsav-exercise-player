@@ -23,9 +23,9 @@ function setAnimationSteps(av, submission) {
         break;
       case String(step.type.match(/^model-.*/)):
         try {
-          handleModelSolution(av, step)
+          handleModelAnswer(av, step)
         } catch (err) {
-          console.warn(`Error when openening model solution window: ${err}`)
+          console.warn(`Error when openening model answer window: ${err}`)
         }
         break;
       case "state-change":
@@ -100,7 +100,7 @@ function getArrayStateChangeType(oldState, newState) {
   return `Old state: ${oldState} \n New statea: ${newState}`
 }
 
-function handleModelSolution(av, step) {
+function handleModelAnswer(av, step) {
   switch(step.type) {
     case "model-recorded":
       modelSolution.begin = step.state;
@@ -166,7 +166,7 @@ function handleUndo(av, step) {
   return handleStateChange(av, step);
 }
 
-//We need it to set the content of the model solution div
+//We need it to set the content of the model answer div
 const setMutationObserver = (targetNode) => {
   let msIndex;
   const callback = function(mutationsList, observer) {
@@ -184,24 +184,24 @@ const setMutationObserver = (targetNode) => {
           switch(text) {
             case "Model solution opened":
               msIndex = 0;
-              $('#model-solution')[0].innerHTML = modelSolution.begin
+              $('#model-answer')[0].innerHTML = modelSolution.begin
               break;
             case String(text.match(/.*forward.*\d*/)):
               msIndex = parseInt(String(text.match(/\d+/))) -1;
-              $('#model-solution')[0].innerHTML = modelSolution.stepsForward[msIndex]
+              $('#model-answer')[0].innerHTML = modelSolution.stepsForward[msIndex]
               break;
             case String(text.match(/.*backward.*\d*/)):
               msIndex = parseInt(String(text.match(/\d+/))) -1;
-              $('#model-solution')[0].innerHTML = modelSolution.stepsBackward[msIndex]
+              $('#model-answer')[0].innerHTML = modelSolution.stepsBackward[msIndex]
               break;
             case String(text.match(/.*first step/)):
-              $('#model-solution')[0].innerHTML = modelSolution.begin
+              $('#model-answer')[0].innerHTML = modelSolution.begin
               break;
             case String(text.match(/.*last step/)):
-              $('#model-solution')[0].innerHTML = modelSolution.end;
+              $('#model-answer')[0].innerHTML = modelSolution.end;
               break;
             case "Model solution closed":
-              $('#model-solution')[0].innerHTML = "";
+              $('#model-answer')[0].innerHTML = "";
               break;
             case "Animation finished":
               let stopButton = $('#pause-button')[0]
@@ -210,7 +210,7 @@ const setMutationObserver = (targetNode) => {
               }
               break;
             default:
-              $('#model-solution')[0].innerHTML = "";
+              $('#model-answer')[0].innerHTML = "";
               break;
           }
         }

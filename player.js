@@ -3,22 +3,16 @@ const initialState = require("./initialState/initialState")
 const animation = require("./animation/animation")
 const dataStructures = require("./dataStructures/dataStructures")
 const helpers = require("./utils/helperFunctions.js")
-const env = require('./.env.js');
 let $ = window.$;
 
-initialize(window.JSAV);
+initialize();
 
-async function initialize(JSAV) {
+async function initialize() {
   try {
-    // let deflatedData = window.location.search.replace('?submission=', '');
-    // let buffer;
-    // try { buffer = Buffer.from(deflatedData, 'base64') }
-    // catch(err) { console.warn(err) }
-    // let submission = JSON.parse(helpers.inflateToAscii(buffer));
     let submission = await getSubmission();
     if(submission && Object.keys(submission).length > 0){
-      initiateAnimation(JSAV, submission);
-      setListeners();
+      initiateAnimation(submission);
+      setKeyboardListeners();
     } else {
       console.warn('No animation data received')
     }
@@ -40,39 +34,31 @@ async function getSubmission() {
 }
 
 
-function initiateAnimation(JSAV, submission) {
+function initiateAnimation(submission) {
   try {
-    new JSAV.utils.Settings($('#settings'));
-    const instructions = submission.definitions.options.instructions;
-    const title = submission.definitions.options.title
-    $("#exercise-instructions").innerHTML = instructions;
-    let av = new JSAV($("#jsavcontainer"), { title: title })
-    initialState.setInitialDataStructures(av, submission)
-    av.displayInit();
-    animation.setAnimationSteps(av, submission)
-    av.recorded();
+
   } catch (err) {
     console.warn(err)
     throw err
   }
 }
 
-function setListeners() {
-  $('#jsavcontainer').click();
+function setKeyboardListeners() {
+  $('#animation-container').click();
   $("#play-button").on('click', startAutoAnimation)
   document.onkeydown = function(event) {
     switch (event.keyCode) {
       case 37:
-        $('.jsavbackward')[0].click()
+        $('#step-backward').click()
         break;
       case 38:
-        $('.jsavbegin')[0].click()
+        $('#to-beginning').click()
         break;
       case 39:
-        $('.jsavforward')[0].click()
+        $('#step-forward').click()
         break;
       case 40:
-        $('.jsavend')[0].click()
+        $('#to-end').click()
         break;
     }
   }
@@ -81,10 +67,10 @@ function setListeners() {
 function startAutoAnimation() {
   let animator = startAnimator()
   $("#play-button").off('click', startAutoAnimation)
-  $('.jsavforward')[0].click()
+  $('#step-forward').click()
   $("#stop-button").on('click', () => {
     clearInterval(animator)
-    $('.jsavbegin')[0].click();
+    $('#to-beginning').click();
     $("#play-button").on('click', startAutoAnimation)
   })
   $("#pause-button").on('click', () => {
@@ -98,7 +84,7 @@ function startAnimator() {
 }
 
 function timedAction() {
-  $('.jsavforward')[0].click();
+  $('#step-forward').click();
 }
 
 window.initializeAnimation = initialize;
