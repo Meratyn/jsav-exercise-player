@@ -24,9 +24,5 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.1.0"
   },
-  "dependencies": {
-    "base-64": "^0.1.0",
-    "pako": "^1.0.11",
-    "safe-base64": "^2.0.1-0"
-  }
+  "dependencies": {}
 }

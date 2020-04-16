@@ -1,9 +1,5 @@
-// const base64 = require('base-64');
-const initialState = require("./initialState/initialState")
-const animation = require("./animation/animation")
-const dataStructures = require("./dataStructures/dataStructures")
-const helpers = require("./utils/helperFunctions.js")
 let $ = window.$;
+let stepcount = 0
 
 initialize();
 
@@ -35,8 +31,36 @@ async function getSubmission() {
 
 
 function initiateAnimation(submission) {
+  let showClicks = true;
+  let gradableSteps = submission.animation.filter(step => step.type === 'gradeable-step');
+  let clickSteps = submission.animation.filter(step => step.type === 'click');
+  let animationSteps = showClicks? clickSteps : gradableSteps;
   try {
-
+    $('#animation-container')[0].innerHTML = submission.initialState.animationDOM;
+    $('#step-forward').on('click', () => {
+      if (stepcount +1 < animationSteps.length -1) {
+        stepcount ++;
+        $('#animation-container')[0].innerHTML = animationSteps[stepcount].animationDOM;
+      } else {
+        $('#animation-container')[0].innerHTML = '<h3>Ended</h3>'
+      }
+    });
+    $('#to-beginning').on('click', () => {
+      stepcount = 0;
+      $('#animation-container')[0].innerHTML = submission.initialState.animationDOM;
+    });
+    $('#step-backward').on('click', () => {
+      if (stepcount -1 > 0) {
+        stepcount --;
+        $('#animation-container')[0].innerHTML = animationSteps[stepcount].animationDOM;
+      } else {
+        $('#animation-container')[0].innerHTML = submission.initialState.animationDOM;
+      }
+    });
+    $('#to-end').on('click', () => {
+      stepcount = animationSteps.length - 1;
+      $('#animation-container')[0].innerHTML = animationSteps[stepcount].animationDOM
+    });
   } catch (err) {
     console.warn(err)
     throw err
@@ -44,21 +68,21 @@ function initiateAnimation(submission) {
 }
 
 function setKeyboardListeners() {
-  $('#animation-container').click();
+  $('#animation-container')[0].click();
   $("#play-button").on('click', startAutoAnimation)
   document.onkeydown = function(event) {
     switch (event.keyCode) {
       case 37:
-        $('#step-backward').click()
+        $('#step-backward')[0].click()
         break;
       case 38:
-        $('#to-beginning').click()
+        $('#to-beginning')[0].click()
         break;
       case 39:
-        $('#step-forward').click()
+        $('#step-forward')[0].click()
         break;
       case 40:
-        $('#to-end').click()
+        $('#to-end')[0].click()
         break;
     }
   }
@@ -86,9 +110,6 @@ function startAnimator() {
 function timedAction() {
   $('#step-forward').click();
 }
-
-window.initializeAnimation = initialize;
-window.resetAnimationData = dataStructures.reset;
 
 module.exports = {
   initialize
