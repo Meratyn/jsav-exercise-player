@@ -67,6 +67,15 @@ function initiateAnimation(submission) {
   }
 }
 
+function exportAnimation(submission) {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(submission));
+  newWindow = window.open(dataStr);
+  // let dlAnchorElem = document.getElementById('downloadAnchorElem');
+  // dlAnchorElem.setAttribute("href",     dataStr     );
+  // dlAnchorElem.setAttribute("download", "scene.json");
+  // dlAnchorElem.click();
+}
+
 function setKeyboardListeners() {
   $('#animation-container')[0].click();
   $("#play-button").on('click', startAutoAnimation)
