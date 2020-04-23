@@ -7,7 +7,7 @@
     "start": "nohup chromium-browser player.html &>/dev/null &",
     "test": "jest --watch --verbose",
     "lint": "npx eslint --fix .",
-    "build": "browserify player.js > build/player-bundle.js"
+    "build": "browserify player.js > build/jsav-exercise-player-bundle.js"
   },
   "keywords": [
     "jsav"
