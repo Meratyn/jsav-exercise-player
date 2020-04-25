@@ -1,6 +1,6 @@
 class DOMAnimation {
   stepCount = 0;
-  paused = false;
+  paused = true;
   constructor(initialStateDOM, animationSteps, canvas) {
     this.initialStateDOM = initialStateDOM;
     this.animationSteps = animationSteps;
@@ -8,7 +8,7 @@ class DOMAnimation {
   }
 
   play(speed) {
-    if(!this.paused) this.reset();
+    if(!this.paused) this.stop();
     this.paused = false;
     this.interval = setInterval(() => this.stepForward(), speed)
   }
@@ -28,8 +28,9 @@ class DOMAnimation {
     clearInterval(this.interval);
   }
 
-  reset() {
+  stop() {
     clearInterval(this.interval);
+    this.paused = true;
     this.stepCount = 0;
     this.canvas.innerHTML = this.initialStateDOM
   }
