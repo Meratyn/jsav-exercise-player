@@ -2,7 +2,6 @@ const { DOMAnimation } = require('./animation/animation.js');
 const { DOMSlideShow } = require('./animation/slideShow.js');
 
 let $ = window.$;
-let showClicks = false;
 let initialStateDOM;
 let animationSteps;
 let $animationContainer = $('#animation-container');
@@ -19,7 +18,7 @@ async function initialize() {
     let submission = await getSubmission();
     if(submission && Object.keys(submission).length > 0){
       initialStateDOM = submission.initialState.animationDOM;
-      animationSteps = getAnimationSteps(submission);
+      animationSteps = getAnimationSteps(submission,true);
       canvas.innerHTML = initialStateDOM;
       initiateSlideShow(submission);
       initializeAnimation(submission);
@@ -100,7 +99,7 @@ function exportAnimation() {
   useModal(modalContent);
 }
 
-function getAnimationSteps(submission) {
+function getAnimationSteps(submission, showClicks) {
   try {
     var gradableSteps = submission.animation.filter(step => step.type === 'gradeable-step');
     var clickSteps = submission.animation.filter(step => step.type === 'click');
