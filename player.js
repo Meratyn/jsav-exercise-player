@@ -102,7 +102,7 @@ function exportAnimation() {
 function getAnimationSteps(submission, showClicks) {
   try {
     var gradableSteps = submission.animation.filter(step => step.type === 'gradeable-step');
-    var clickSteps = submission.animation.filter(step => step.type === 'click');
+    var clickSteps = submission.animation.filter(step => step.type !== 'grade');;
   } catch (err) {
     console.warn(` Failed getting animation steps: ${err}`);
   }
