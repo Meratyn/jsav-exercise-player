@@ -8,7 +8,7 @@ Since the Exercise Player uses certain HTML elements to construct the animation,
 
 ## To run the tests
 The tests are written with Jest. To run the tests do this directory:
-
+- `git checkout master`.
 - `npm install` in the root folder of this project (if you have not done yet).
 - `npm run test`.
 
