@@ -5,6 +5,10 @@
   padding-top: 10px;
 }
 
+.jsavvaluelabel {
+  font-size: xx-small;
+}
+
 .jsavline {
   height: 38px;
 }
@@ -70,17 +74,18 @@ button {
   border-color: transparent transparent transparent #404040;
 }
 
-
-
 p {
   margin: 5px !important;
 }
+
 #model-answer path {
 display: none;
 }
+
 .no-data {
   text-align: center;
 }
+
 .model-answer {
   min-height: 350px;
 }
