@@ -2,7 +2,7 @@ const { DOMAnimation } = require('./animation/animation.js');
 const { DOMSlideShow } = require('./animation/slideShow.js');
 
 let $ = window.$;
-let initialStateDOM;
+let initialStateHTML;
 let animationSteps;
 let $animationContainer = $('#animation-container');
 let canvas = $animationContainer[0];
@@ -17,9 +17,9 @@ async function initialize() {
   try {
     let submission = await getSubmission();
     if(submission && Object.keys(submission).length > 0){
-      initialStateDOM = submission.initialState.animationDOM;
+      initialStateHTML = submission.initialState.animationHTML;
       animationSteps = getAnimationSteps(submission,true);
-      canvas.innerHTML = initialStateDOM;
+      canvas.innerHTML = initialStateHTML;
       initiateSlideShow(submission);
       initializeAnimation(submission);
       $('#jaal').on('click', () => showJaal(submission));
@@ -46,7 +46,7 @@ async function getSubmission() {
 
 function initiateSlideShow(submission) {
   try {
-    var slideShow = new DOMSlideShow(initialStateDOM, animationSteps, canvas);
+    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas);
   } catch (err) {
     console.warn(`Error when initializing slideshow: ${err}`);
   }
@@ -64,7 +64,7 @@ function initializeAnimation(submission) {
   const $playPauseButton = $("#play-pause-button");
   const $stopButton = $("#stop-button");
   try {
-    var animation = new DOMAnimation(initialStateDOM, animationSteps, canvas);
+    var animation = new DOMAnimation(initialStateHTML, animationSteps, canvas);
   } catch (err) {
     console.warn(`Error when initializing animation: ${err}`);
   }

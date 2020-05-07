@@ -1,8 +1,8 @@
 class DOMAnimation {
   stepCount = 0;
   paused = true;
-  constructor(initialStateDOM, animationSteps, canvas) {
-    this.initialStateDOM = initialStateDOM;
+  constructor(initialStateHTML, animationSteps, canvas) {
+    this.initialStateHTML = initialStateHTML;
     this.animationSteps = animationSteps;
     this.canvas = canvas;
   }
@@ -19,7 +19,7 @@ class DOMAnimation {
 
   stepForward() {
     if (this.stepCount < this.animationSteps.length) {
-      this.canvas.innerHTML = this.animationSteps[this.stepCount].animationDOM;
+      this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
       this.stepCount++;
     } else {
       clearInterval(this.interval);
@@ -36,7 +36,7 @@ class DOMAnimation {
     clearInterval(this.interval);
     this.paused = true;
     this.stepCount = 0;
-    this.canvas.innerHTML = this.initialStateDOM
+    this.canvas.innerHTML = this.initialStateHTML
   }
 }
 
