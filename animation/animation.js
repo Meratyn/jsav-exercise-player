@@ -11,10 +11,10 @@ class DOMAnimation {
     return this.paused;
   }
 
-  play(speed) {
+  play($speedInput) {
     if(!this.paused) this.stop();
     this.paused = false;
-    this.interval = setInterval(() => this.stepForward(), speed)
+    this.interval = setInterval(() => this.stepForward(), $speedInput.val()*-1)
   }
 
   stepForward() {

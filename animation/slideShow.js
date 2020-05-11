@@ -7,7 +7,7 @@ class DOMSlideShow {
   }
 
   backward() {
-    if (this.stepCount >= 0) {
+    if (this.stepCount >= 0 && this.animationSteps.length > 0) {
       this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
       this.stepCount--;
     } else {
@@ -25,8 +25,12 @@ class DOMSlideShow {
   }
 
   toEnd() {
-    this.stepCount = this.animationSteps.length -1;
-    this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+    if (this.animationSteps.length > 0) {
+      this.stepCount = this.animationSteps.length -1;
+      this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+    } else {
+      this.reset();
+    }
   }
 
   reset() {

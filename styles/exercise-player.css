@@ -12,11 +12,16 @@
 .jsavline {
   height: 38px;
 }
-.jsavcanvas, {
+.jsavcanvas {
   min-height: 250px;
+  min-width: 200px !important;
   margin: 5px;
 }
-.import-export, .final-grade, .jsavoutput, .play, .animation-instructions,
+.views-container {
+  display: flex;
+  justify-content: center;
+}
+.import-export, .final-grade, .jsavoutput, .player-controls, .view-control,
 .model-answer, .slide-show {
   text-align: center;
   margin: 2px;
@@ -35,6 +40,13 @@
   border-radius: 5px;
 }
 
+.animation-view, .model-answer-view {
+  width: 600px;
+  border: solid 1px black;
+  margin: 2px;
+  padding: 2px;
+}
+
 button {
   margin: 0.5%;
 }
@@ -45,26 +57,25 @@ button {
 }
 
 #play-pause-button {
-  box-shadow: 2px 5px #888888;
-  padding: 0px;
-  width: 30px;
-  height: 30px;
   border-top: 15px solid transparent;
   border-left: 30px solid #202020;
   border-bottom: 15px solid transparent;
   border-right: 0px;
   background-color: transparent;
   transition: 100ms all ease;
-  cursor: pointer;
 }
 
 #stop-button {
+  border: 2px solid white;
+}
+
+.animation-button {
+  background-color: #202020;
   box-shadow: 2px 5px #888888;
   width: 30px;
   height: 30px;
   padding: 0px;
-  border: 2px solid white;
-  background-color: #202020;
+  cursor: pointer;
 }
 
 #stop-button:hover {
@@ -97,6 +108,10 @@ p {
 
 #model-answer path {
 display: none;
+}
+
+.selected {
+  background: #9d9d9d;
 }
 
 .no-data {

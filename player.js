@@ -1,11 +1,8 @@
 const { DOMAnimation } = require('./animation/animation.js');
 const { DOMSlideShow } = require('./animation/slideShow.js');
+const animationView = require('./animation/animation-view.js');
 
-let $ = window.$;
-let initialStateHTML;
-let animationSteps;
-let $animationContainer = $('#animation-container');
-let canvas = $animationContainer[0];
+// let $ = window.$;
 
 initialize();
 
@@ -17,13 +14,13 @@ async function initialize() {
   try {
     let submission = await getSubmission();
     if(submission && Object.keys(submission).length > 0){
-      initialStateHTML = submission.initialState.animationHTML;
-      animationSteps = getAnimationSteps(submission,true);
+      const initialStateHTML = submission.initialState.animationHTML;
+      const animationSteps = getAnimationSteps(submission,true);
+      const canvas = $('#animation-container')[0];
       canvas.innerHTML = initialStateHTML;
-      initiateSlideShow(submission);
-      initializeAnimation(submission);
-      $('#jaal').on('click', () => showJaal(submission));
-      $('#export').on('click', () => exportAnimation());
+      animationView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
+      animationView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+      setClickHandlers(submission)
     } else {
       console.warn('No animation data received')
     }
@@ -44,48 +41,20 @@ async function getSubmission() {
   }
 }
 
-function initiateSlideShow(submission) {
-  try {
-    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas);
-  } catch (err) {
-    console.warn(`Error when initializing slideshow: ${err}`);
-  }
-  try {
-    $('#to-beginning').on('click', () => slideShow.reset());
-    $('#step-backward').on('click', () => slideShow.backward());
-    $('#step-forward').on('click', () => slideShow.forward());
-    $('#to-end').on('click', () => slideShow.toEnd());
-  } catch (err) {
-    console.warn(`Error when setting listeners for slideshow: ${err}`);
-  }
-}
+function setClickHandlers(submission) {
+  $('#compare-view-button').on('click', (event) => {
+    event.target.toggleAttribute('disabled');
+    $('#detailed-view-button').attr({'disabled': false});
+    $('.import-export').toggle();
+  });
 
-function initializeAnimation(submission) {
-  const $playPauseButton = $("#play-pause-button");
-  const $stopButton = $("#stop-button");
-  try {
-    var animation = new DOMAnimation(initialStateHTML, animationSteps, canvas);
-  } catch (err) {
-    console.warn(`Error when initializing animation: ${err}`);
-  }
-  try {
-    $playPauseButton.on('click', () => {
-      if(animation.isPaused()) animation.play(1000);
-      else animation.pause();
-      $playPauseButton.toggleClass("pause");
-    });
-    $stopButton.on('click', () => {
-      animation.stop();
-      $playPauseButton.removeClass("pause");
-    });
-  } catch (err) {
-    console.warn(`Error when setting listeners for animation: ${err}`);
-  }
-}
-
-function setButtonImage(isPaused, $button) {
-  if(isPaused) $button.attr('src', `${window.location.origin}/img/play-button.png`);
-  else  $button.attr('src', `${window.location.origin}/img/pause-button.png`);
+  $('#detailed-view-button').on('click', (event) => {
+    event.target.toggleAttribute('disabled');
+    $('.import-export').toggle();
+    $('#compare-view-button').attr({'disabled': false});
+  });
+  $('#jaal').on('click', () => showJaal(submission));
+  $('#export').on('click', () => exportAnimation());
 }
 
 function showJaal(submission) {
