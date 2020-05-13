@@ -19,11 +19,11 @@ class DOMAnimation {
 
   stepForward() {
     if (this.stepCount < this.animationSteps.length) {
-      this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.setCanvas()
       this.stepCount++;
     } else {
       clearInterval(this.interval);
-      this.canvas.innerHTML = '<h3>Ended</h3>';
+      this.canvas.animationCanvas.innerHTML = '<h3>Ended</h3>';
     }
   }
 
@@ -36,8 +36,18 @@ class DOMAnimation {
     clearInterval(this.interval);
     this.paused = true;
     this.stepCount = 0;
-    this.canvas.innerHTML = this.initialStateHTML
+    this.canvas.animationCanvas.innerHTML = this.initialStateHTML;
   }
+
+  setCanvas() {
+    if(this.animationSteps[this.stepCount].type.includes('model')) {
+      this.canvas.modelAnswerCanvas.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
+    } else {
+      this.canvas.animationCanvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.canvas.modelAnswerCanvas.innerHTML = '';
+    }
+  }
+
 }
 
 module.exports = {

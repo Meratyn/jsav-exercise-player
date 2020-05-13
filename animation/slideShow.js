@@ -7,9 +7,9 @@ class DOMSlideShow {
   }
 
   backward() {
-    if (this.stepCount >= 0 && this.animationSteps.length > 0) {
-      this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+    if (this.stepCount > 0 && this.animationSteps.length > 0) {
       this.stepCount--;
+      this.setCanvas();
     } else {
       this.reset();
     }
@@ -18,16 +18,16 @@ class DOMSlideShow {
   forward() {
     if (this.stepCount < this.animationSteps.length -1) {
       this.stepCount++;
-      this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.setCanvas();
     } else {
-      this.canvas.innerHTML = '<h3>Ended</h3>';
+      this.canvas.animationCanvas.innerHTML = '<h3>Ended</h3>';
     }
   }
 
   toEnd() {
     if (this.animationSteps.length > 0) {
       this.stepCount = this.animationSteps.length -1;
-      this.canvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.setCanvas();
     } else {
       this.reset();
     }
@@ -35,7 +35,16 @@ class DOMSlideShow {
 
   reset() {
     this.stepCount = -1;
-    this.canvas.innerHTML = this.initialStateHTML;
+    this.canvas.animationCanvas.innerHTML = this.initialStateHTML;
+  }
+
+  setCanvas() {
+    if(this.animationSteps[this.stepCount].type.includes('model')) {
+      this.canvas.modelAnswerCanvas.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
+    } else {
+      this.canvas.animationCanvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.canvas.modelAnswerCanvas.innerHTML = '';
+    }
   }
 
 }
