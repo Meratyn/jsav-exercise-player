@@ -43,7 +43,6 @@ class DOMSlideShow {
       this.canvas.modelAnswerCanvas.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
     } else {
       this.canvas.animationCanvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
-      this.canvas.modelAnswerCanvas.innerHTML = '';
     }
   }
 
