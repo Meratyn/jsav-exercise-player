@@ -2,6 +2,7 @@ const { DOMAnimation } = require('./animation/animation.js');
 const { DOMSlideShow } = require('./animation/slideShow.js');
 const animationView = require('./animation/animation-view.js');
 const modelAnswerView = require('./animation/model-answer-view.js');
+const jsonViewer = require('./json-viewer/index');
 
 // let $ = window.$;
 
@@ -148,7 +149,7 @@ function setClickHandlers(submission) {
 }
 
 function showJaal(submission) {
-  const modalContent = JSON.stringify(submission, null, 2);
+  const modalContent = jsonViewer.readKeys(submission)(true);
   useModal(modalContent);
 }
 
@@ -159,9 +160,10 @@ function exportAnimation() {
 }
 
 function useModal(modalContent) {
-  $("#modal-content").text(modalContent);
+  $("#modal-content").html(modalContent);
   const modal = $('#myModal');
   modal.css('display', 'block');
+  jsonViewer.setClickListeners();
   const close = $('.close');
   close.on('click', () => modal.css('display', 'none'));
 }
