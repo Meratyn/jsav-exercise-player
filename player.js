@@ -148,22 +148,21 @@ function setClickHandlers(submission) {
   $('#export').on('click', () => exportAnimation());
 }
 
-function showJaal(submission) {
-  const modalContent = jsonViewer.readKeys(submission)(true);
-  useModal(modalContent);
-}
-
 function exportAnimation() {
   const iframe = `<iframe src=${window.location.href}</iframe>`
   const modalContent = `Add this iframe to an HTML document to import the animation: \n${iframe}`;
   useModal(modalContent);
 }
 
-function useModal(modalContent) {
-  $("#modal-content").html(modalContent);
+function showJaal(submission) {
   const modal = $('#myModal');
   modal.css('display', 'block');
-  jsonViewer.setClickListeners();
+  $('#show-jaal').on('click', () => {
+    const htmlToString = $('#html-to-string').prop('checked');
+    const modalContent = jsonViewer.jsonToHTML(submission)(true)(htmlToString);
+    $("#modal-content").html(modalContent);
+    jsonViewer.setClickListeners();
+  })
   const close = $('.close');
   close.on('click', () => modal.css('display', 'none'));
 }
