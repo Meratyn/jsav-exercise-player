@@ -17,4 +17,4 @@ To bundle all the required modules in one file use [Browserify](http://browserif
 - `git checkout master`.
 - `npm install` in the root folder of this project (if you have not done yet).
 - `npm install -g browserify` if you have not installed it yet.
-- `browserify exerciseRecorder.js > build/jsav-exercise-player-bundle.js.js`.
+- `browserify player.js > build/jsav-exercise-player-bundle.js`.
