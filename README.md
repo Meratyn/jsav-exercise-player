@@ -55,4 +55,5 @@ To bundle all the required modules in one file use [Browserify](http://browserif
     npm install -g browserify
     browserify player.js > build/jsav-exercise-player-bundle.js
 
-    
+The DSA Y course repository, branch `traky`, should have a script called
+`compile-jaal.sh` which does the rest.
