@@ -171,13 +171,13 @@ display: none;
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-/* The Close Button */
+/* A Close Button */
 .close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
-  display: contents;
+  display: block;
 }
 
 .close:hover,
