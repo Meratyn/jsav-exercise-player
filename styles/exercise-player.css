@@ -195,3 +195,8 @@ display: none;
 #modal-content, #animation-container, #model-answer-container {
   overflow: scroll;
 }
+
+#model-step-number, #student-step-number {
+  min-width: 64px;
+  display: inline-block;
+}

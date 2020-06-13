@@ -47,10 +47,10 @@
           <button class="animation-button animation-stop" id="compare-view-stop-button"></button>
         </div>
         <div class="slide-show">
-          <button id="compare-view-to-beginning">&lt;&lt;</button>
+          <button id="compare-view-to-beginning">|&lt;</button>
           <button id="compare-view-step-backward">&lt;</button>
           <button id="compare-view-step-forward">&gt;</button>
-          <button id="compare-view-to-end">&gt;&gt;</button>
+          <button id="compare-view-to-end">&gt;|</button>
         </div>
       </div>
     </div>
@@ -59,6 +59,7 @@
         <h4>In this mode you can see all the click actions and if the model answer was opened</h4>
     </div>
 
+    <!-- Student's answer view -->
     <div class="views-container">
       <div class="animation-view">
         <div class="view-control">
@@ -67,15 +68,17 @@
             <button class="animation-button animation-stop" id="stop-button"></button>
           </div>
           <div class="slide-show">
-            <button id="to-beginning">&lt;&lt;</button>
+            <button id="to-beginning">|&lt;</button>
             <button id="step-backward">&lt;</button>
+            <span id="student-step-number">XX / YY</span>
             <button id="step-forward">&gt;</button>
-            <button id="to-end">&gt;&gt;</button>
+            <button id="to-end">&gt;|</button>
           </div>
         </div>
         <div id="animation-container"></div>
       </div>
 
+      <!-- Model answer view -->
       <div class="model-answer-view">
         <div class="view-control">
           <div class="auto-animation">
@@ -83,30 +86,29 @@
             <button class="animation-button animation-stop" id="model-answer-stop-button"></button>
           </div>
           <div class="slide-show">
-            <button id="model-answer-to-beginning">&lt;&lt;</button>
+            <button id="model-answer-to-beginning">|&lt;</button>
             <button id="model-answer-step-backward">&lt;</button>
+            <span id="model-step-number">XX / YY</span>
             <button id="model-answer-step-forward">&gt;</button>
-            <button id="model-answer-to-end">&gt;&gt;</button>
+            <button id="model-answer-to-end">&gt;|</button>
           </div>
         </div>
         <div id="model-answer-container" class="jsavcanvas"></div>
       </div>
     </div>
 
+    <!-- JSON tree view for JAAL data -->
     <div id="jaalTreeModal" class="modal">
       <div class="modal-content">
         <div>
           <span class="jaal-close" id="jaalTreeModal-close">&times;</span>
         </div>
         <div>
-          <!-- <code><pre id="modal-content"></pre></code> -->
           <p>JSON Algorithm Animation Language (JAAL) viewer</p>
           <label for="html-to-string">Display JAAL HTML content as string</label>
           <input type="checkbox" id="html-to-string" value="">
           <button type="button" id="show-jaal">Show</button>
-          <div id="modal-content">
-
-          </div>
+          <div id="modal-content"></div>
         </div>
       </div>
     </div>

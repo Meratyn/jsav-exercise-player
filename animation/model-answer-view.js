@@ -1,9 +1,11 @@
 const { DOMAnimation } = require('./animation.js');
 const { DOMSlideShow } = require('./slideShow.js');
 
-function initializeSlideShow(initialStateHTML, animationSteps, canvas) {
+function initializeSlideShow(initialStateHTML, animationSteps, canvas,
+stepDisplay) {
   try {
-    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas);
+    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas,
+      stepDisplay);
   } catch (err) {
     console.warn(`Error when initializing slideshow: ${err}`);
   }
