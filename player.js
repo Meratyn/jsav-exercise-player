@@ -116,6 +116,8 @@ function setClickHandlers(submission) {
     initializeAnimationView(submission,true);
   });
 
+  $('#about-button').on('click', showAboutDialog);
+
   $('#compare-view-to-beginning').on('click', () => {
     $('#to-beginning').click();
     $('#model-answer-to-beginning').click();
@@ -163,6 +165,16 @@ function showJaal(submission) {
   })
   const closeButton = $('#jaalTreeModal-close');
   closeButton.on('click', () => modal.css('display', 'none'));
+}
+
+function showAboutDialog() {
+  const aboutText = "JSAV Exercise Player 1.0.1\n\n" +
+  "Giacomo Mariani and Artturi Tilanterä, 2020\n\n" +
+  "https://github.com/MarianiGiacomo/jsav-exercise-player\n" +
+  "https://aaltodoc.aalto.fi/handle/123456789/44448\n" +
+  "https://research.cs.aalto.fi/LeTech/ <b>jee</b>";
+
+  window.alert(aboutText);
 }
 
 module.exports = {
