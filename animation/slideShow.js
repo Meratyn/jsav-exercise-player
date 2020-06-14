@@ -1,3 +1,8 @@
+// slideShow.js
+//
+// Implements static slideshow of an algoritm visualization which can be
+// viewed step by step by clicking buttons on the GUI.
+
 class DOMSlideShow {
   stepCount = -1;
   constructor(initialStateHTML, animationSteps, canvas) {

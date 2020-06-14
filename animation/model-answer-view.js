@@ -1,3 +1,7 @@
+// model-answer-view.js
+//
+// Binds GUI buttons of the Model answer view
+
 const { DOMAnimation } = require('./animation.js');
 const { DOMSlideShow } = require('./slideShow.js');
 

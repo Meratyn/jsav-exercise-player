@@ -1,3 +1,8 @@
+// animation.js
+//
+// This is similar to slideShow.js, but implements animation functionality
+// with timing.
+
 class DOMAnimation {
   stepCount = 0;
   paused = true;

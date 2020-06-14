@@ -1,3 +1,7 @@
+// player.js
+//
+// Main JavaScript file of the JSAV Exercise Player.
+
 const { DOMAnimation } = require('./animation/animation.js');
 const { DOMSlideShow } = require('./animation/slideShow.js');
 const animationView = require('./animation/animation-view.js');
@@ -12,7 +16,6 @@ async function initialize() {
     console.warn(`Failed setting button images: ${err}`);
   }
   try {
-    // let submission = await getSubmission();
     if (submission && Object.keys(submission).length > 0) {
       initializeAnimationView(submission, false);
       initializeModelAnswerView(submission);
@@ -22,18 +25,6 @@ async function initialize() {
     }
   } catch (err) {
     console.warn(err)
-  }
-}
-
-async function getSubmission() {
-  try {
-    const parsedUrl = new URL(window.location.href);
-    const submissionUrl = parsedUrl.searchParams.get("submission");
-    const response = await fetch(submissionUrl)
-    const submission = response.json();
-    return submission;
-  } catch (err) {
-    throw new Error(`Failed getting submission from address ${submissionUrl}: ${err}`)
   }
 }
 
@@ -52,7 +43,7 @@ function initializeAnimationView(submission, detailed) {
 function initializeModelAnswerView(submission) {
   const modelAnswer = submission.definitions.modelAnswer;
   if (modelAnswer.steps.length > 0) {
-      var initialStateHTML = getModelAnserInitialHTML(modelAnswer);
+      var initialStateHTML = getModelAnswerInitialHTML(modelAnswer);
   } else {
     $('#model-answer-container').html('<h3>No model answer data</h3>');
     return;
@@ -77,7 +68,7 @@ function getAnimationSteps(submission, detailed) {
   return detailed? allSteps : gradableSteps;
 }
 
-function getModelAnserInitialHTML(modelAnswer) {
+function getModelAnswerInitialHTML(modelAnswer) {
   const counterHTML = modelAnswer.steps[0].html.counterHTML;
   const outputHTML = modelAnswer.steps[0].html.outputHTML;
   const canvasHTML = modelAnswer.steps[0].html.canvasHTML;

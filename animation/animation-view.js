@@ -1,3 +1,7 @@
+// animation-view.js
+//
+// Binds GUI buttons of the Student's answer view
+
 const { DOMAnimation } = require('./animation.js');
 const { DOMSlideShow } = require('./slideShow.js');
 
