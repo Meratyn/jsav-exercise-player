@@ -44,9 +44,12 @@ function initializeAnimationView(submission, detailed) {
     animationCanvas: $('#animation-container')[0],
     modelAnswerCanvas: $('#model-answer-container')[0]
   }
+  const stepDisplay = $('#student-step-number');
   canvas.animationCanvas.innerHTML = initialStateHTML;
-  animationView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
-  animationView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+  animationView.initializeSlideShow(initialStateHTML, animationSteps, canvas,
+    stepDisplay);
+  animationView.initializeAnimation(initialStateHTML, animationSteps, canvas,
+    stepDisplay);
 }
 
 function initializeModelAnswerView(submission) {
@@ -62,9 +65,12 @@ function initializeModelAnswerView(submission) {
     animationCanvas: $('#model-answer-container')[0],
     modelAnswerCanvas: {}
   }
+  const stepDisplay = $('#model-step-number');
   canvas.animationCanvas.innerHTML = initialStateHTML;
-  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
-  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps, canvas,
+    stepDisplay);
+  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps, canvas,
+    stepDisplay);
 }
 
 function getAnimationSteps(submission, detailed) {
@@ -116,6 +122,8 @@ function setClickHandlers(submission) {
     initializeAnimationView(submission,true);
   });
 
+
+
   $('#compare-view-to-beginning').on('click', () => {
     $('#to-beginning').click();
     $('#model-answer-to-beginning').click();
@@ -144,6 +152,7 @@ function setClickHandlers(submission) {
 
   $('#jaal').on('click', () => showJaal(submission));
   $('#export').on('click', () => exportAnimation());
+  $('#about-button').on('click', showAboutDialog);
 }
 
 function exportAnimation() {
@@ -163,6 +172,16 @@ function showJaal(submission) {
   })
   const closeButton = $('#jaalTreeModal-close');
   closeButton.on('click', () => modal.css('display', 'none'));
+}
+
+function showAboutDialog() {
+  const aboutText = "JSAV Exercise Player 1.0.1\n\n" +
+  "Giacomo Mariani and Artturi Tilanterä, 2020\n\n" +
+  "https://github.com/MarianiGiacomo/jsav-exercise-player\n" +
+  "https://aaltodoc.aalto.fi/handle/123456789/44448\n" +
+  "https://research.cs.aalto.fi/LeTech/";
+
+  window.alert(aboutText);
 }
 
 module.exports = {
