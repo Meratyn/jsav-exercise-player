@@ -1,16 +1,14 @@
 class DOMSlideShow {
-  currentStep = 0;
-  constructor(initialStateHTML, animationSteps, canvas, stepDisplay) {
+  stepCount = -1;
+  constructor(initialStateHTML, animationSteps, canvas) {
     this.initialStateHTML = initialStateHTML;
     this.animationSteps = animationSteps;
     this.canvas = canvas;
-    this.stepDisplay = stepDisplay;
-    this.setCanvas();
   }
 
   backward() {
-    if (this.currentStep > 0 && this.animationSteps.length > 0) {
-      this.currentStep--;
+    if (this.stepCount > 0 && this.animationSteps.length > 0) {
+      this.stepCount--;
       this.setCanvas();
     } else {
       this.reset();
@@ -18,19 +16,17 @@ class DOMSlideShow {
   }
 
   forward() {
-    if (this.currentStep < this.animationSteps.length - 1) {
-      this.currentStep++;
+    if (this.stepCount < this.animationSteps.length -1) {
+      this.stepCount++;
       this.setCanvas();
     } else {
       this.canvas.animationCanvas.innerHTML = '<h3>Ended</h3>';
-      let total = this.animationSteps.length;
-      this.stepDisplay.text(total + " / " + total);
     }
   }
 
   toEnd() {
-    if (this.animationSteps.length > 1) {
-      this.currentStep = this.animationSteps.length;
+    if (this.animationSteps.length > 0) {
+      this.stepCount = this.animationSteps.length -1;
       this.setCanvas();
     } else {
       this.reset();
@@ -38,14 +34,16 @@ class DOMSlideShow {
   }
 
   reset() {
-    this.currentStep = 0;
+    this.stepCount = -1;
     this.canvas.animationCanvas.innerHTML = this.initialStateHTML;
   }
 
   setCanvas() {
-    let current = this.currentStep + 1;
-    let total = this.animationSteps.length;
-    this.stepDisplay.text(current + " / " + total);
+    if(this.animationSteps[this.stepCount].type.includes('model')) {
+      this.canvas.modelAnswerCanvas.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
+    } else {
+      this.canvas.animationCanvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+    }
   }
 
 }
