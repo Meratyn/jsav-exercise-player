@@ -152,6 +152,7 @@ function setClickHandlers(submission) {
 
   $('#jaal').on('click', () => showJaal(submission));
   $('#export').on('click', () => exportAnimation());
+  $('#about-button').on('click', showAboutDialog);
 }
 
 function exportAnimation() {
@@ -178,7 +179,7 @@ function showAboutDialog() {
   "Giacomo Mariani and Artturi Tilanterä, 2020\n\n" +
   "https://github.com/MarianiGiacomo/jsav-exercise-player\n" +
   "https://aaltodoc.aalto.fi/handle/123456789/44448\n" +
-  "https://research.cs.aalto.fi/LeTech/ <b>jee</b>";
+  "https://research.cs.aalto.fi/LeTech/";
 
   window.alert(aboutText);
 }
