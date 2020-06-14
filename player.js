@@ -102,7 +102,7 @@ function setClickHandlers(submission) {
     $('.compare-view').toggle();
     $('.model-answer-view > .view-control').toggle();
     $('#compare-view-button').attr({'disabled': false});
-    $('#model-answer-container').html('<h3>Model answer steps visulized during the exercise</h3>');
+    $('#model-answer-container').html('<h3>Model answer steps visualized during the exercise</h3>');
     $('#animation-container').html('');
     initializeStudentAnswerView(submission,true);
   });
