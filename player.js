@@ -17,7 +17,7 @@ async function initialize() {
   }
   try {
     if (submission && Object.keys(submission).length > 0) {
-      initializeAnimationView(submission, false);
+      initializeStudentAnswerView(submission, false);
       initializeModelAnswerView(submission);
       setClickHandlers(submission)
     } else {
@@ -28,7 +28,7 @@ async function initialize() {
   }
 }
 
-function initializeAnimationView(submission, detailed) {
+function initializeStudentAnswerView(submission, detailed) {
   const initialStateHTML = submission.initialState.animationHTML;
   const animationSteps = getAnimationSteps(submission,detailed);
   const canvas = {
@@ -92,7 +92,7 @@ function setClickHandlers(submission) {
     $('.compare-view').toggle();
     $('.model-answer-view > .view-control').toggle();
     $('#animation-container').html('');
-    initializeAnimationView(submission,false);
+    initializeStudentAnswerView(submission,false);
     initializeModelAnswerView(submission);
   });
 
@@ -104,7 +104,7 @@ function setClickHandlers(submission) {
     $('#compare-view-button').attr({'disabled': false});
     $('#model-answer-container').html('<h3>Model answer steps visulized during the exercise</h3>');
     $('#animation-container').html('');
-    initializeAnimationView(submission,true);
+    initializeStudentAnswerView(submission,true);
   });
 
   $('#compare-view-to-beginning').on('click', () => {
