@@ -31,13 +31,13 @@ async function initialize() {
 function initializeStudentAnswerView(submission, detailed) {
   const initialStateHTML = submission.initialState.animationHTML;
   const animationSteps = getAnimationSteps(submission,detailed);
-  const canvas = {
-    animationCanvas: $('#animation-container')[0],
-    modelAnswerCanvas: $('#model-answer-container')[0]
+  const canvases = {
+    student: $('#animation-container')[0],
+    modelAnswer: $('#model-answer-container')[0]
   }
-  canvas.animationCanvas.innerHTML = initialStateHTML;
-  studentView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
-  studentView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+  canvases.student.innerHTML = initialStateHTML;
+  studentView.initializeSlideShow(initialStateHTML, animationSteps, canvases);
+  studentView.initializeAnimation(initialStateHTML, animationSteps, canvases);
 }
 
 function initializeModelAnswerView(submission) {
@@ -49,13 +49,13 @@ function initializeModelAnswerView(submission) {
     return;
   }
   const animationSteps = getModelAnswerSteps(modelAnswer);
-  const canvas = {
-    animationCanvas: $('#model-answer-container')[0],
-    modelAnswerCanvas: {}
+  const canvases = {
+    student: $('#model-answer-container')[0],
+    modelAnswer: {}
   }
-  canvas.animationCanvas.innerHTML = initialStateHTML;
-  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
-  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+  canvases.student.innerHTML = initialStateHTML;
+  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps, canvases);
+  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps, canvases);
 }
 
 function getAnimationSteps(submission, detailed) {

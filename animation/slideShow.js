@@ -5,10 +5,19 @@
 
 class DOMSlideShow {
   stepCount = -1;
-  constructor(initialStateHTML, animationSteps, canvas) {
+
+  // Constructor.
+  //
+  // Parameters:
+  // initialStateHTML: initial HTML to be displayed in the view.
+  // animationSteps: steps of the slideshow.
+  // canvases:
+  //   .student:    the DOM object of the student's view (a <div> element)
+  //   .modelAnwer: the DOM object of the student's view (a <div> element)
+  constructor(initialStateHTML, animationSteps, canvases) {
     this.initialStateHTML = initialStateHTML;
     this.animationSteps = animationSteps;
-    this.canvas = canvas;
+    this.canvases = canvases;
   }
 
   backward() {
@@ -25,7 +34,7 @@ class DOMSlideShow {
       this.stepCount++;
       this.setCanvas();
     } else {
-      this.canvas.animationCanvas.innerHTML = '<h3>Ended</h3>';
+      this.canvases.student.innerHTML = '<h3>Ended</h3>';
     }
   }
 
@@ -40,14 +49,14 @@ class DOMSlideShow {
 
   reset() {
     this.stepCount = -1;
-    this.canvas.animationCanvas.innerHTML = this.initialStateHTML;
+    this.canvases.student.innerHTML = this.initialStateHTML;
   }
 
   setCanvas() {
     if(this.animationSteps[this.stepCount].type.includes('model')) {
-      this.canvas.modelAnswerCanvas.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
+      this.canvases.modelAnswer.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
     } else {
-      this.canvas.animationCanvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.canvases.student.innerHTML = this.animationSteps[this.stepCount].animationHTML;
     }
   }
 
