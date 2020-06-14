@@ -1,4 +1,4 @@
-// animation-view.js
+// student-answer-view.js
 //
 // Binds GUI buttons of the Student's answer view
 

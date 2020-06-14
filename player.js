@@ -4,7 +4,7 @@
 
 const { DOMAnimation } = require('./animation/animation.js');
 const { DOMSlideShow } = require('./animation/slideShow.js');
-const animationView = require('./animation/animation-view.js');
+const studentView = require('./animation/student-answer-view.js');
 const modelAnswerView = require('./animation/model-answer-view.js');
 const jsonViewer = require('./json-viewer/index');
 
@@ -36,8 +36,8 @@ function initializeAnimationView(submission, detailed) {
     modelAnswerCanvas: $('#model-answer-container')[0]
   }
   canvas.animationCanvas.innerHTML = initialStateHTML;
-  animationView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
-  animationView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+  studentView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
+  studentView.initializeAnimation(initialStateHTML, animationSteps, canvas);
 }
 
 function initializeModelAnswerView(submission) {
