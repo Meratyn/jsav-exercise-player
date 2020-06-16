@@ -35,9 +35,15 @@ function initializeStudentAnswerView(submission, detailed) {
     student: $('#animation-container')[0],
     modelAnswer: $('#model-answer-container')[0]
   }
+  const controls = {
+    studentPosition: $('#student-step-number'),
+    modelAnswerPosition: $('#model-step-number')
+  }
   canvases.student.innerHTML = initialStateHTML;
-  studentView.initializeSlideShow(initialStateHTML, animationSteps, canvases);
-  studentView.initializeAnimation(initialStateHTML, animationSteps, canvases);
+  studentView.initializeSlideShow(initialStateHTML, animationSteps, canvases,
+    controls);
+  studentView.initializeAnimation(initialStateHTML, animationSteps, canvases,
+    controls);
 }
 
 function initializeModelAnswerView(submission) {
@@ -53,9 +59,15 @@ function initializeModelAnswerView(submission) {
     student: $('#model-answer-container')[0],
     modelAnswer: {}
   }
+  const controls = {
+    studentPosition: $('#student-step-number'),
+    modelAnswerPosition: $('#model-step-number')
+  }
   canvases.student.innerHTML = initialStateHTML;
-  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps, canvases);
-  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps, canvases);
+  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps,
+    canvases, controls);
+  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps,
+    canvases, controls);
 }
 
 function getAnimationSteps(submission, detailed) {
@@ -85,6 +97,9 @@ function getModelAnswerSteps(modelAnswer) {
 }
 
 function setClickHandlers(submission) {
+  $('#show-player').click(togglePlayer);
+  $('#close-player-modal').click(togglePlayer);
+
   $('#compare-view-button').on('click', (event) => {
     event.target.toggleAttribute('disabled');
     $('#detailed-view-button').attr({'disabled': false});
@@ -133,7 +148,7 @@ function setClickHandlers(submission) {
     $('#model-answer-stop-button').click();
   });
 
-  $('#jaal').on('click', () => showJaal(submission));
+  $('#jaal').on('click', () => showJaalTree(submission));
   $('#export').on('click', () => exportAnimation());
 }
 
@@ -143,8 +158,20 @@ function exportAnimation() {
   useModal(modalContent);
 }
 
-function showJaal(submission) {
-  const modal = $('#myModal');
+// Toggles main Player modal on/off
+function togglePlayer() {
+  const modal = $('#player-modal');
+  if (modal.css('display') === 'none') {
+    modal.css('display', 'block');
+  }
+  else {
+    modal.css('display', 'none');
+  }
+}
+
+// Shows JAAL tree modal
+function showJaalTree(submission) {
+  const modal = $('#jaalTreeModal');
   modal.css('display', 'block');
   $('#show-jaal').on('click', () => {
     const htmlToString = $('#html-to-string').prop('checked');
@@ -152,8 +179,8 @@ function showJaal(submission) {
     $("#modal-content").html(modalContent);
     jsonViewer.setClickListeners();
   })
-  const close = $('.close');
-  close.on('click', () => modal.css('display', 'none'));
+  const closeButton = $('#jaalTreeModal-close');
+  closeButton.on('click', () => modal.css('display', 'none'));
 }
 
 module.exports = {

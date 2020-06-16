@@ -130,19 +130,5 @@ JSON.parse(atob("eyJtZXRhZGF0YSI6eyJtYXhfcG9pbnRzIjoiMTAwIiwidWlkIjowLCJvcmRpbmF
 <link rel="stylesheet" href="../styles/exercise-player.css" type="text/css" />
 
 </body>
-<script>
-  function togglePlayer() {
-    const modal = $('#player-modal');
-    if (modal.css('display') === 'none') {
-      modal.css('display', 'block');
-    }
-    else {
-      modal.css('display', 'none');
-    }
-  }
-  $('#show-player').click(togglePlayer);
-  $('#close-player-modal').click(togglePlayer);
-</script>
-
 <script src="../build/jsav-exercise-player-bundle.js"></script>
 </html>
