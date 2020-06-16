@@ -5,23 +5,10 @@
 
 class DOMSlideShow {
   stepCount = -1;
-
-  // Constructor.
-  //
-  // Parameters:
-  // initialStateHTML: initial HTML to be displayed in the view.
-  // animationSteps: steps of the slideshow.
-  // canvases:
-  //   .student:    the DOM object of the student's view (a <div> element)
-  //   .modelAnwer: the DOM object of the student's view (a <div> element)
-  // controls:
-  //   .studentPosition: a <span> for showing position in student's answer
-  //   .modelAnswerPosition: a <span> for showing position in model solution
-  constructor(initialStateHTML, animationSteps, canvases, controls) {
+  constructor(initialStateHTML, animationSteps, canvas) {
     this.initialStateHTML = initialStateHTML;
     this.animationSteps = animationSteps;
-    this.canvases = canvases;
-    this.controls = controls;
+    this.canvas = canvas;
   }
 
   backward() {
@@ -38,7 +25,7 @@ class DOMSlideShow {
       this.stepCount++;
       this.setCanvas();
     } else {
-      this.canvases.student.innerHTML = '<h3>Ended</h3>';
+      this.canvas.animationCanvas.innerHTML = '<h3>Ended</h3>';
     }
   }
 
@@ -53,19 +40,14 @@ class DOMSlideShow {
 
   reset() {
     this.stepCount = -1;
-    this.canvases.student.innerHTML = this.initialStateHTML;
-    this.setCanvas();
+    this.canvas.animationCanvas.innerHTML = this.initialStateHTML;
   }
 
   setCanvas() {
-    if (this.animationSteps[this.stepCount].type.includes('model')) {
-      this.canvases.modelAnswer.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
-      this.controls.modelAnswerPosition.html(
-        (this.stepCount + 1) + "/" + this.animationSteps.length);
+    if(this.animationSteps[this.stepCount].type.includes('model')) {
+      this.canvas.modelAnswerCanvas.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
     } else {
-      this.canvases.student.innerHTML = this.animationSteps[this.stepCount].animationHTML;
-      this.controls.studentPosition.html(
-        (this.stepCount + 1) + "/" + this.animationSteps.length);
+      this.canvas.animationCanvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
     }
   }
 

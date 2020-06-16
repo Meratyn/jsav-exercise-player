@@ -4,7 +4,7 @@
 
 const { DOMAnimation } = require('./animation/animation.js');
 const { DOMSlideShow } = require('./animation/slideShow.js');
-const animationView = require('./animation/animation-view.js');
+const studentView = require('./animation/student-answer-view.js');
 const modelAnswerView = require('./animation/model-answer-view.js');
 const jsonViewer = require('./json-viewer/index');
 
@@ -17,7 +17,7 @@ async function initialize() {
   }
   try {
     if (submission && Object.keys(submission).length > 0) {
-      initializeAnimationView(submission, false);
+      initializeStudentAnswerView(submission, false);
       initializeModelAnswerView(submission);
       setClickHandlers(submission)
     } else {
@@ -28,16 +28,22 @@ async function initialize() {
   }
 }
 
-function initializeAnimationView(submission, detailed) {
+function initializeStudentAnswerView(submission, detailed) {
   const initialStateHTML = submission.initialState.animationHTML;
   const animationSteps = getAnimationSteps(submission,detailed);
-  const canvas = {
-    animationCanvas: $('#animation-container')[0],
-    modelAnswerCanvas: $('#model-answer-container')[0]
+  const canvases = {
+    student: $('#animation-container')[0],
+    modelAnswer: $('#model-answer-container')[0]
   }
-  canvas.animationCanvas.innerHTML = initialStateHTML;
-  animationView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
-  animationView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+  const controls = {
+    studentPosition: $('#student-step-number'),
+    modelAnswerPosition: $('#model-step-number')
+  }
+  canvases.student.innerHTML = initialStateHTML;
+  studentView.initializeSlideShow(initialStateHTML, animationSteps, canvases,
+    controls);
+  studentView.initializeAnimation(initialStateHTML, animationSteps, canvases,
+    controls);
 }
 
 function initializeModelAnswerView(submission) {
@@ -49,13 +55,19 @@ function initializeModelAnswerView(submission) {
     return;
   }
   const animationSteps = getModelAnswerSteps(modelAnswer);
-  const canvas = {
-    animationCanvas: $('#model-answer-container')[0],
-    modelAnswerCanvas: {}
+  const canvases = {
+    student: $('#model-answer-container')[0],
+    modelAnswer: {}
   }
-  canvas.animationCanvas.innerHTML = initialStateHTML;
-  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps, canvas);
-  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps, canvas);
+  const controls = {
+    studentPosition: $('#student-step-number'),
+    modelAnswerPosition: $('#model-step-number')
+  }
+  canvases.student.innerHTML = initialStateHTML;
+  modelAnswerView.initializeSlideShow(initialStateHTML, animationSteps,
+    canvases, controls);
+  modelAnswerView.initializeAnimation(initialStateHTML, animationSteps,
+    canvases, controls);
 }
 
 function getAnimationSteps(submission, detailed) {
@@ -95,7 +107,7 @@ function setClickHandlers(submission) {
     $('.compare-view').toggle();
     $('.model-answer-view > .view-control').toggle();
     $('#animation-container').html('');
-    initializeAnimationView(submission,false);
+    initializeStudentAnswerView(submission,false);
     initializeModelAnswerView(submission);
   });
 
@@ -105,9 +117,9 @@ function setClickHandlers(submission) {
     $('.compare-view').toggle();
     $('.model-answer-view > .view-control').toggle();
     $('#compare-view-button').attr({'disabled': false});
-    $('#model-answer-container').html('<h3>Model answer steps visulized during the exercise</h3>');
+    $('#model-answer-container').html('<h3>Model answer steps visualized during the exercise</h3>');
     $('#animation-container').html('');
-    initializeAnimationView(submission,true);
+    initializeStudentAnswerView(submission,true);
   });
 
   $('#compare-view-to-beginning').on('click', () => {
@@ -136,7 +148,7 @@ function setClickHandlers(submission) {
     $('#model-answer-stop-button').click();
   });
 
-  $('#jaal').on('click', () => showJaal(submission));
+  $('#jaal').on('click', () => showJaalTree(submission));
   $('#export').on('click', () => exportAnimation());
 }
 
@@ -158,7 +170,7 @@ function togglePlayer() {
 }
 
 // Shows JAAL tree modal
-function showJaal(submission) {
+function showJaalTree(submission) {
   const modal = $('#jaalTreeModal');
   modal.css('display', 'block');
   $('#show-jaal').on('click', () => {
@@ -167,8 +179,8 @@ function showJaal(submission) {
     $("#modal-content").html(modalContent);
     jsonViewer.setClickListeners();
   })
-  const close = $('#jaalTreeModal-close');
-  close.on('click', () => modal.css('display', 'none'));
+  const closeButton = $('#jaalTreeModal-close');
+  closeButton.on('click', () => modal.css('display', 'none'));
 }
 
 module.exports = {

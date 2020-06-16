@@ -6,19 +6,10 @@
 class DOMAnimation {
   stepCount = 0;
   paused = true;
-
-  // Constructor.
-  //
-  // Parameters:
-  // initialStateHTML: initial HTML to be displayed in the view.
-  // animationSteps: steps of the slideshow.
-  // canvases:
-  //   .student:    the DOM object of the student's view (a <div> element)
-  //   .modelAnwer: the DOM object of the student's view (a <div> element)
-  constructor(initialStateHTML, animationSteps, canvases) {
+  constructor(initialStateHTML, animationSteps, canvas) {
     this.initialStateHTML = initialStateHTML;
     this.animationSteps = animationSteps;
-    this.canvases = canvases;
+    this.canvas = canvas;
   }
 
   isPaused() {
@@ -37,7 +28,7 @@ class DOMAnimation {
       this.stepCount++;
     } else {
       clearInterval(this.interval);
-      this.canvases.student.innerHTML = '<h3>Ended</h3>';
+      this.canvas.animationCanvas.innerHTML = '<h3>Ended</h3>';
     }
   }
 
@@ -50,14 +41,14 @@ class DOMAnimation {
     clearInterval(this.interval);
     this.paused = true;
     this.stepCount = 0;
-    this.canvases.student.innerHTML = this.initialStateHTML;
+    this.canvas.animationCanvas.innerHTML = this.initialStateHTML;
   }
 
   setCanvas() {
     if(this.animationSteps[this.stepCount].type.includes('model')) {
-      this.canvases.modelAnswer.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
+      this.canvas.modelAnswerCanvas.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
     } else {
-      this.canvases.student.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.canvas.animationCanvas.innerHTML = this.animationSteps[this.stepCount].animationHTML;
     }
   }
 

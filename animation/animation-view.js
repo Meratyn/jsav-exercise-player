@@ -1,12 +1,11 @@
-// student-answer-view.js
+// animation-view.js
 //
 // Binds GUI buttons of the Student's answer view
 
 const { DOMAnimation } = require('./animation.js');
 const { DOMSlideShow } = require('./slideShow.js');
 
-function initializeSlideShow(initialStateHTML, animationSteps, canvas,
-  controls) {
+function initializeSlideShow(initialStateHTML, animationSteps, canvas) {
   try {
     $('#to-beginning').off('click');
     $('#step-backward').off('click');
@@ -16,8 +15,7 @@ function initializeSlideShow(initialStateHTML, animationSteps, canvas,
     console.warn(`Error when setting listeners for slideshow: ${err}`);
   }
   try {
-    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas,
-      controls);
+    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas);
   } catch (err) {
     console.warn(`Error when initializing slideshow: ${err}`);
   }
