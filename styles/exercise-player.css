@@ -137,6 +137,11 @@ p {
 display: none;
 }
 
+#speed {
+  width: 200px;
+  display: inline;
+}
+
 .selected {
   background: #9d9d9d;
 }
