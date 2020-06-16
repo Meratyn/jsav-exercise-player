@@ -5,7 +5,8 @@
 const { DOMAnimation } = require('./animation.js');
 const { DOMSlideShow } = require('./slideShow.js');
 
-function initializeSlideShow(initialStateHTML, animationSteps, canvas) {
+function initializeSlideShow(initialStateHTML, animationSteps, canvas,
+  controls) {
   try {
     $('#to-beginning').off('click');
     $('#step-backward').off('click');
@@ -15,7 +16,8 @@ function initializeSlideShow(initialStateHTML, animationSteps, canvas) {
     console.warn(`Error when setting listeners for slideshow: ${err}`);
   }
   try {
-    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas);
+    var slideShow = new DOMSlideShow(initialStateHTML, animationSteps, canvas,
+      controls);
   } catch (err) {
     console.warn(`Error when initializing slideshow: ${err}`);
   }

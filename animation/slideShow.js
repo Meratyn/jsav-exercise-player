@@ -14,10 +14,14 @@ class DOMSlideShow {
   // canvases:
   //   .student:    the DOM object of the student's view (a <div> element)
   //   .modelAnwer: the DOM object of the student's view (a <div> element)
-  constructor(initialStateHTML, animationSteps, canvases) {
+  // controls:
+  //   .studentPosition: a <span> for showing position in student's answer
+  //   .modelAnswerPosition: a <span> for showing position in model solution
+  constructor(initialStateHTML, animationSteps, canvases, controls) {
     this.initialStateHTML = initialStateHTML;
     this.animationSteps = animationSteps;
     this.canvases = canvases;
+    this.controls = controls;
   }
 
   backward() {
@@ -50,13 +54,18 @@ class DOMSlideShow {
   reset() {
     this.stepCount = -1;
     this.canvases.student.innerHTML = this.initialStateHTML;
+    this.setCanvas();
   }
 
   setCanvas() {
-    if(this.animationSteps[this.stepCount].type.includes('model')) {
+    if (this.animationSteps[this.stepCount].type.includes('model')) {
       this.canvases.modelAnswer.innerHTML = this.animationSteps[this.stepCount].modelAnswerHTML;
+      this.controls.modelAnswerPosition.html(
+        (this.stepCount + 1) + "/" + this.animationSteps.length);
     } else {
       this.canvases.student.innerHTML = this.animationSteps[this.stepCount].animationHTML;
+      this.controls.studentPosition.html(
+        (this.stepCount + 1) + "/" + this.animationSteps.length);
     }
   }
 
