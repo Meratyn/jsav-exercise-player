@@ -43,17 +43,19 @@ Go to <some_dir> and give the following commands:
     git submodule init && git submodule update
     npm install
 
-### Running the tests
+## Running the tests
 The tests are written with Jest. To run the tests do this the
 `jsav-exercise-player` directory:
 
     npm run test
 
-### Building the bundle file
+## Standalone player test
+
+## Building the bundle file
 To bundle all the required modules in one file use [Browserify](http://browserify.org/).
 
     npm install -g browserify
-    browserify player.js > build/jsav-exercise-player-bundle.js
+    ./build.sh
 
 The DSA Y course repository, branch `traky`, should have a script called
 `compile-jaal.sh` which does the rest.
