@@ -1,3 +1,5 @@
+/* JSAV and OpenDSA specific modifications */
+
 #jsavcontainer {
   height: max-content;
   border: khaki 2px solid;
@@ -35,6 +37,43 @@
   display: block;
 }
 
+.jsavtree, .jsavcommontree, .jsavautoresize, .jsavbinarytree {
+  left: 0px !important;
+  margin: auto;
+}
+
+/* JSAV Exercise Player specific CSS */
+
+/* The main modal (pop-up) box */
+#jaalPlayerModal {
+  min-width: 1200px;
+}
+
+.jaalModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 5% from the top and centered */ 
+  padding: 20px;
+  border: 1px solid #888;
+  /* width: 80%; */ /* Could be more or less, depending on screen size */
+}
+
+
+
 .selected {
   background-color: yellow !important;
 }
@@ -67,11 +106,6 @@
   border: solid 1px black;
   margin: 2px;
   padding: 2px;
-}
-
-.jsavtree, .jsavcommontree, .jsavautoresize, .jsavbinarytree {
-  left: 0px !important;
-  margin: auto;
 }
 
 button {
@@ -154,31 +188,7 @@ display: none;
   min-height: 350px;
 }
 
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
 
-/* Modal Content/Box */
-.player-modal {
-  min-width: 1200px;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  /* width: 80%; */ /* Could be more or less, depending on screen size */
-}
 
 /* A Close button. This must be named with `jaal-` because the Bootstrap
  * library also has a `close` class. */

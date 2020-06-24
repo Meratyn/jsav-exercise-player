@@ -148,7 +148,7 @@ function exportAnimation() {
 
 // Toggles main Player modal on/off
 function togglePlayer() {
-  const modal = $('#player-modal');
+  const modal = $('#jaalPlayerModal');
   if (modal.css('display') === 'none') {
     modal.css('display', 'block');
   }
