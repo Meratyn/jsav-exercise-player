@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../styles/JSAV.css" type="text/css" />
   <link rel="stylesheet" href="../styles/odsaAV-min.css" type="text/css" />
   <link rel="stylesheet" href="../styles/exercise-player.css" type="text/css" />
+  <link rel="stylesheet" href="../styles/aplus-main.css" type="text/css" />
 
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
   <script src="../lib/jquery-ui.min.js"></script>
@@ -27,3 +28,61 @@
 
   <p>This is a standalone JSAV Exercise Player for test purposes. This HTML file
   contains an exercise recording of the Insertion sort JSAV exercise.</p>
+
+<button type="button" id="show-aplus-modal">Show A+ modal</button>
+
+<script>
+$('#show-aplus-modal').click(toggleAplusModal);
+$('#close-aplus-modal').on('click', toggleAplusModal);
+
+function toggleAplusModal() {
+  console.log('toggleAplusModal clicked!');
+  const modal = $('#page-modal');
+  if (modal.css('display') === 'none') {
+    modal.css('display', 'block');
+  }
+  else {
+    modal.css('display', 'none');
+  }
+}
+</script>
+
+<div id="page-modal" class="modal in" role="dialog" style="display: none; padding-right: 10px;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-progress" style="display: none;">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:100%" data-msg-error="Loading failed!">
+            Loading...
+          </div>
+        </div>
+      </div>
+      <div class="modal-body" style="display: block;">
+        <p class="submission-title">5.3 Mergesort: 5.3.1 Mergesort</p>
+        <table class="submission-info table table-bordered table-condensed">
+          <tbody><tr><th>Date</th><th>Points</th><th>Course staff</th></tr>
+          <tr>
+            <td>Fri, Jun 26 2020, 4:42 p.m.</td>
+            <td class="points-badge"><span class="hidden">
+              <span class="difficulty">A</span>
+              <span class="badge badge-warning" data-toggle="tooltip" data-placement="bottom" title="">
+              0 / 200
+              </span>
+              </span>
+              <span class="difficulty">A</span>
+              <span class="badge badge-warning" data-toggle="tooltip" data-placement="bottom" title="">
+              0 / 200
+              </span>
+            </td>
+            <td>
+              <a href="/a1141/2020/jarjestaminen/mergesort/mergesort_ex/submissions/2915681/inspect/" class="btn btn-default btn-xs">
+  						<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+  						Inspect
+    					</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div id="exercise-all">
+          <div class="exercise-content">
+            Sait 0/34 pistettä vastauksestasi.

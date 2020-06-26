@@ -164,7 +164,7 @@ function showJaal(submission) {
   $('#show-jaal').on('click', () => {
     const htmlToString = $('#html-to-string').prop('checked');
     const modalContent = jsonViewer.jsonToHTML(submission)(true)(htmlToString);
-    $("#modal-content").html(modalContent);
+    $("#jaalTreeContent").html(modalContent);
     jsonViewer.setClickListeners();
   })
   const close = $('#jaalTreeModal-close');
