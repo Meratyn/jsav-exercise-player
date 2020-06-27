@@ -23,13 +23,75 @@
   <script src="../lib/raphael.js"></script>
   <script src="../lib/JSAV-min.js"></script>
 
+  <style type="text/css">
+  #main-aplus-text {
+    width: 70ex;
+  }
+  </style>
+
 </head>
 <body>
 
-  <p>This is a standalone JSAV Exercise Player for test purposes. This HTML file
-  contains an exercise recording of the Insertion sort JSAV exercise.</p>
+<div id="main-aplus-text">
+
+<p>This is a standalone JSAV Exercise Player for test purposes. This HTML file
+contains an exercise recording of the Insertion sort JSAV exercise.</p>
 
 <button type="button" id="show-aplus-modal">Show A+ modal</button>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur justo
+dui, volutpat sed sem et, imperdiet efficitur ligula. Nam rhoncus vulputate
+augue vel condimentum. Nam rhoncus sapien quis augue ultrices, eu placerat
+sapien mattis. Quisque mattis aliquam mi, sed luctus purus luctus fermentum.
+Suspendisse at velit in ex aliquam tempor id nec lacus. Sed consectetur eu
+turpis nec congue. Nullam congue nisl in urna ultricies aliquam. Sed ut libero
+eu urna faucibus placerat. Orci varius natoque penatibus et magnis dis
+parturient montes, nascetur ridiculus mus. Donec sed suscipit quam, sed
+accumsan nisi.</p>
+
+<p>Nullam interdum tincidunt tortor, in consectetur turpis tincidunt et. Duis
+non tempus ante. Ut et dolor et tortor porta condimentum. Suspendisse id
+ligula quis neque pellentesque finibus eu nec turpis. Duis ac dictum tellus,
+tempor tincidunt justo. Donec finibus consequat ex, id porta augue ornare vel.
+Praesent consequat ultricies lectus, at pharetra orci pharetra vel. Phasellus
+gravida lorem eget odio egestas aliquam. Praesent ex tellus, convallis vitae
+cursus et, ornare nec eros. Vestibulum et velit sed neque mattis iaculis eu
+non ipsum. Quisque id porttitor eros. Maecenas maximus lobortis ante id
+mattis. Pellentesque blandit pulvinar massa. Etiam vel massa vitae ligula
+tempor maximus sit amet eget ipsum. Ut purus mi, dignissim sit amet convallis
+dignissim, gravida a lorem.</p>
+
+<p>Suspendisse potenti. Proin laoreet sollicitudin euismod. Nunc eleifend et erat
+sit amet consectetur. Maecenas rhoncus eros sit amet turpis rutrum vestibulum.
+Phasellus lorem tellus, semper quis gravida eu, suscipit nec nisl. Nulla
+sagittis, eros nec molestie hendrerit, dui lacus mollis nisl, eu ornare justo
+libero et justo. Sed quis tortor arcu. Quisque sit amet elit ultrices dolor
+molestie sollicitudin. Nulla accumsan ligula non mi vestibulum, ut interdum
+magna tristique. In ultrices, est et dignissim lacinia, felis nisi luctus nisl,
+ut luctus felis dui quis quam. Fusce consequat pretium quam efficitur aliquet.
+Etiam elit urna, blandit et sollicitudin sed, posuere vitae urna. Sed
+pellentesque fringilla enim a vulputate.</p>
+
+<p>Cras semper purus eu velit placerat, eu facilisis ante facilisis. Vestibulum
+a venenatis purus. Praesent hendrerit et enim eu volutpat. Vivamus sagittis
+porttitor ex, a facilisis nisl pulvinar auctor. Donec vitae convallis augue.
+Donec condimentum bibendum magna, quis sagittis orci dapibus vitae. Praesent
+maximus nisl a quam sodales, eu lacinia orci sollicitudin. Ut posuere, risus
+eget venenatis imperdiet, sem ex congue diam, sit amet laoreet sem elit at est.
+Nunc ac efficitur purus. Morbi tristique orci quis sagittis finibus. Mauris
+lobortis nisl a urna ullamcorper dapibus. Maecenas pulvinar vulputate viverra.
+Curabitur pretium vehicula purus, at placerat dui consequat ut. Fusce vel nisl
+lobortis, consectetur turpis vel, facilisis neque. Quisque rhoncus lorem a augue
+lacinia, ac congue sem blandit. Vivamus varius justo vel facilisis faucibus.</p>
+
+<p>Nulla pretium eleifend lacus, ut feugiat odio aliquam quis. Integer luctus
+risus odio, at venenatis tellus condimentum vitae. Etiam at venenatis ex, a
+elementum justo. Curabitur dignissim nisl sed risus faucibus, non euismod massa
+fermentum. Morbi vulputate, erat vitae consectetur finibus, nulla mauris mattis
+dui, eget rutrum metus dolor quis arcu. Sed at turpis urna. Etiam vulputate
+porttitor urna a bibendum.</p>
+
+</div>
 
 <script>
 $('#show-aplus-modal').click(toggleAplusModal);
@@ -88,8 +150,8 @@ function toggleAplusModal() {
             Sait 0/34 pistettä vastauksestasi.
 <button type="button" id="show-player">Show player</button>
 
-<div id="jaalPlayerModal" class="jaalModal">
-  <div class="jaalModalContent">
+<!-- <div id="jaalPlayerModal" class="jaalModal"> -->
+  <div id="jaalPlayerModal" class="jaalModalContent">
   <span class="jaal-close" id="close-player-modal">&times;</span>
 
 
@@ -178,7 +240,7 @@ function toggleAplusModal() {
   </div>
 
 </div> <!-- .jaalModalContent -->
-</div> <!-- #jaalPlayerModal -->
+<!-- </div> --> <!-- #jaalPlayerModal -->
 </div>
 </div>
 </div>

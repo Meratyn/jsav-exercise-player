@@ -8,6 +8,8 @@ const animationView = require('./animation/animation-view.js');
 const modelAnswerView = require('./animation/model-answer-view.js');
 const jsonViewer = require('./json-viewer/index');
 
+let modalPositioned = false;
+
 initialize();
 
 async function initialize() {
@@ -150,7 +152,13 @@ function exportAnimation() {
 function togglePlayer() {
   const modal = $('#jaalPlayerModal');
   if (modal.css('display') === 'none') {
-    modal.css('display', 'block');
+    modal.css('display', 'block');    
+    const pageWidth = $('html').innerWidth();
+    const modalWidth = modal.innerWidth();
+    const leftOffset = Math.max((pageWidth - modalWidth) / 2, 30);
+    modal.offset({top: 40, left: leftOffset});
+    modalPositioned = true;
+
   }
   else {
     modal.css('display', 'none');

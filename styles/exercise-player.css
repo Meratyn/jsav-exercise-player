@@ -46,9 +46,12 @@
 
 /* The main modal (pop-up) box */
 #jaalPlayerModal {
+  display: none; /* Hidden by default */
   min-width: 1200px;
 }
 
+/* Grey shade over other elements on the page. The actual modal box is
+ * inside this. */
 .jaalModal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
