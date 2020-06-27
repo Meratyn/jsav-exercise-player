@@ -1,0 +1,19 @@
+How to configure the JSAV Exercise Player window with A+/Bootstrap modal?
+
+Option 1
+--------
+
+<div id="jaalPlayerModal">:
+  this is actually not needed
+
+<div id="jaalModalContent">:
+  This could have CSS:
+  position: relative;
+  top: -x;
+  left: -y;
+
+  Where `x` and `y` are the initial pixel coordinates of the top-left corner of
+  the jaalModalContent <div> on the page. Is it possible to read them by
+  jQuery and then alter them?
+
+  Yes! $('#jaalModalContent').offset() (both get and set)
