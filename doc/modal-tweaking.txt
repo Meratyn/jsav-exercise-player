@@ -17,3 +17,6 @@ Option 1
   jQuery and then alter them?
 
   Yes! $('#jaalModalContent').offset() (both get and set)
+
+Another problem: CSS "position: fixed" is bad, because the modal is not
+scrollable. We cannot assume that every user has at least 1280x1024 viewport!

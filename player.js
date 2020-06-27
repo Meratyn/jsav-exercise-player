@@ -152,17 +152,35 @@ function exportAnimation() {
 function togglePlayer() {
   const modal = $('#jaalPlayerModal');
   if (modal.css('display') === 'none') {
-    modal.css('display', 'block');    
-    const pageWidth = $('html').innerWidth();
-    const modalWidth = modal.innerWidth();
-    const leftOffset = Math.max((pageWidth - modalWidth) / 2, 30);
-    modal.offset({top: 40, left: leftOffset});
-    modalPositioned = true;
 
+    modal.css('display', 'block');
+    const desiredOffset = 30; // pixels
+    const widthSettings = fitInnerMeasure($('html').innerWidth(),
+      modal.innerWidth(), desiredOffset);
+
+    const heightSettings = fitInnerMeasure($('html').innerHeight(),
+      modal.innerHeight(), desiredOffset);
+    
+    modal.offset({top: heightSettings.offset, left: widthSettings.offset});
+    modal.css('height', heightSettings.measure);
+    modal.css('width', widthSettings.measure);
   }
   else {
     modal.css('display', 'none');
   }
+}
+
+// Helper function for fitting a modal box inside page display area
+function fitInnerMeasure(pageMeasure, modalMeasure, desiredOffset) {
+  let result = { offset: 0, measure: 0 };
+  if (modalMeasure < pageMeasure) {
+    result.offset = Math.max((pageMeasure - modalMeasure) / 2, desiredOffset);
+    result.measure = modalMeasure;
+  }
+  else {
+    result.measure = pageMeasure;
+  }
+  return result;
 }
 
 // Shows JAAL tree modal

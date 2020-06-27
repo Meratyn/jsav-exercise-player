@@ -47,7 +47,9 @@
 /* The main modal (pop-up) box */
 #jaalPlayerModal {
   display: none; /* Hidden by default */
-  min-width: 1200px;
+  width: 1200px;
+  height: 900px;
+  overflow: scroll;
 }
 
 /* Grey shade over other elements on the page. The actual modal box is
