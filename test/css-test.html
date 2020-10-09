@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS test</title>
+
+
+
+  <style type="text/css">
+  .box {
+    border: 1px solid black;
+  }
+  #jaalPlayer > .box {
+    background: #CCF;
+  }
+  #jaalPlayer .specialbox {
+    border: 3px solid green;
+    background: #9F9;
+  }
+  </style>
+
+</head>
+<body>
+
+<div class="box">
+  This is the simple box.
+  <div id="jaalPlayer">
+    <div class="box">
+      This is a box inside a box.
+      <div class="specialbox">
+        This is a third-level nested box.
+      </div>
+    </div>
+  </div>
+  This is again the simple box.
+</div>
+</body>
+</html>
