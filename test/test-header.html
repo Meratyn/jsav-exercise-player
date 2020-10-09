@@ -93,22 +93,6 @@ porttitor urna a bibendum.</p>
 
 </div>
 
-<script>
-$('#show-aplus-modal').click(toggleAplusModal);
-$('#close-aplus-modal').on('click', toggleAplusModal);
-
-function toggleAplusModal() {
-  console.log('toggleAplusModal clicked!');
-  const modal = $('#page-modal');
-  if (modal.css('display') === 'none') {
-    modal.css('display', 'block');
-  }
-  else {
-    modal.css('display', 'none');
-  }
-}
-</script>
-
 <div id="page-modal" class="modal in" role="dialog" style="display: none; padding-right: 10px;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
