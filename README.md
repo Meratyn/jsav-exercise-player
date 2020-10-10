@@ -44,11 +44,14 @@ it is important that it is imported in the HTML document (player.html) after the
 It is assumed that the DSA Y course repository is at <some_dir>/traky.
 Go to <some_dir> and give the following commands:
 
-    git clone -b traky
     git clone -b traky https://github.com/MarianiGiacomo/jsav-exercise-player
     cd jsav-exercise-player
     git submodule init && git submodule update
     npm install
+
+For more information, see the file `exercises/jsav/jaal/README.md` in the
+source code of Data Structures and Algorithms Y. As of Autumn 2020, the branch
+`2020-both` contains a working version.
 
 ## Running the tests
 The tests are written with Jest. To run the tests do this the
