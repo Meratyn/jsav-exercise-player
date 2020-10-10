@@ -6,6 +6,13 @@ Visual Algorithm Simulation exercises. It is based on
 For extensive background information, see
 [Giacomo Mariani's MSc thesis](https://aaltodoc.aalto.fi/handle/123456789/44448).
 
+## Required software
+
+To compile and run the software, you will need:
+
+- [Node.js](https://nodejs.org/en/)
+- [Browserify](http://browserify.org/)
+
 ## git branches
 
 `master` is the main development branch.
