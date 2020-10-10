@@ -50,8 +50,10 @@ Go to <some_dir> and give the following commands:
     npm install
 
 For more information, see the file `exercises/jsav/jaal/README.md` in the
-source code of Data Structures and Algorithms Y. As of Autumn 2020, the branch
-`2020-both` contains a working version.
+source code of [Data Structures and Algorithms
+Y](https://version.aalto.fi/gitlab/course/traky). As of Autumn 2020, the
+branch `2020-both` contains a working version.
+
 
 ## Running the tests
 The tests are written with Jest. To run the tests do this the
