@@ -18,7 +18,8 @@ async function initialize() {
     console.warn(`Failed setting button images: ${err}`);
   }
   try {
-    if (submission && Object.keys(submission).length > 0) {
+    if (globalThis.JAALrecording && Object.keys(globalThis.JAALrecording).length > 0) {
+      let submission = global.JAALrecording;
       initializeAnimationView(submission, false);
       initializeModelAnswerView(submission);
       setClickHandlers(submission)
@@ -160,7 +161,7 @@ function togglePlayer() {
 
     const heightSettings = fitInnerMeasure($('html').innerHeight(),
       modal.innerHeight(), desiredOffset);
-    
+
     modal.offset({top: heightSettings.offset, left: widthSettings.offset});
     modal.css('height', heightSettings.measure);
     modal.css('width', widthSettings.measure);
