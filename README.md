@@ -63,6 +63,10 @@ The tests are written with Jest. To run the tests do this the
 
 ## Standalone player test
 
+One can test the Player without a running [A+ LMS](https://apluslms.github.io/)
+by opening the file `test/standalone-player.html` in a web browser. See the
+file itself for more documentation.
+
 ## Building the bundle file
 To bundle all the required modules in one file use [Browserify](http://browserify.org/).
 
