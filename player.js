@@ -151,10 +151,8 @@ function exportAnimation() {
 
 // Toggles main Player modal on/off.
 function togglePlayer() {
-  const modal = $('#jaalPlayerModal');
-  if (modal.css('display') === 'none') {
-    modal.css('display', 'block');
-
+  var jaalModal = $('#jaalPlayerModal');
+  if (jaalModal.css('display') === 'none') {
     /* Assumption: the exercise recording and HTML references to the JSAV
      * Exercise player are placed in A+ LMS like this:
      * <div class="modal-content">
@@ -172,22 +170,18 @@ function togglePlayer() {
      * must be recomputed when the modal is shown. This is what the code below
      * does.
      */
+     jaalModal.css('display', 'block');
+     var aplusModal = $('.modal-content');
+     var offset = jaalModal.offset();
+     const leftAdjust = - 0.5 * (jaalModal.width() - aplusModal.width());
+     const topAdjust = -30;
+     offset.left += leftAdjust;
+     offset.top += topAdjust;
+     jaalModal.offset(offset);
 
-    // Position #jaalPlayerModal this many pixels down and left from the
-    // <html> element.
-    const desiredOffset = 15;
-    const widthSettings = fitInnerMeasure($('html').innerWidth(),
-      modal.innerWidth(), desiredOffset);
-
-    const heightSettings = fitInnerMeasure($('html').innerHeight(),
-      modal.innerHeight(), desiredOffset);
-
-    modal.offset({top: heightSettings.offset, left: widthSettings.offset});
-    modal.css('height', heightSettings.measure);
-    modal.css('width', widthSettings.measure);
   }
   else {
-    modal.css('display', 'none');
+    jaalModal.css('display', 'none');
   }
 }
 
