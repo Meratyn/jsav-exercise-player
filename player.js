@@ -149,13 +149,33 @@ function exportAnimation() {
   useModal(modalContent);
 }
 
-// Toggles main Player modal on/off
+// Toggles main Player modal on/off.
 function togglePlayer() {
   const modal = $('#jaalPlayerModal');
   if (modal.css('display') === 'none') {
-
     modal.css('display', 'block');
-    const desiredOffset = 30; // pixels
+
+    /* Assumption: the exercise recording and HTML references to the JSAV
+     * Exercise player are placed in A+ LMS like this:
+     * <div class="modal-content">
+     *   <div class="exercise-content">
+     *     <-- Code from templates/player-body.html -->
+     *     <div id="jaalPlayerModal" class="jaalModalContent">
+     *     </div>
+     *   </div>
+     * </div>
+     * The CSS class "modal-content" is from the Bootstrap library
+     * (http://getbootstrap.com). Even if the CSS for #jaalPlayerModal is:
+     *   { position: fixed; top: 30px; left: 30px; }
+     * the browser positions #jaalPlayerModal relative to .modal-content,
+     * not the browser window! Therefore the fixed position of #jaalPlayerModal
+     * must be recomputed when the modal is shown. This is what the code below
+     * does.
+     */
+
+    // Position #jaalPlayerModal this many pixels down and left from the
+    // <html> element.
+    const desiredOffset = 15;
     const widthSettings = fitInnerMeasure($('html').innerWidth(),
       modal.innerWidth(), desiredOffset);
 

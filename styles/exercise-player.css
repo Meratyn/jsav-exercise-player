@@ -2,10 +2,14 @@
  * content is inside this <div> element. */
 #jaalPlayerModal {
   display: none; /* Hidden by default */
+  position: fixed;
+  top: 30px;
+  left: 30px;
   width: 1200px;
   height: 900px;
   overflow: scroll;
   background: #FFF;
+  border: 1px solid #AAA;
 }
 
 /* JSAV and OpenDSA specific modifications for JSAV Exercise Player.
