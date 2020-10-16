@@ -153,36 +153,68 @@ function exportAnimation() {
 function togglePlayer() {
   var jaalModal = $('#jaalPlayerModal');
   if (jaalModal.css('display') === 'none') {
-    /* Assumption: the exercise recording and HTML references to the JSAV
-     * Exercise player are placed in A+ LMS like this:
-     * <div class="modal-content">
-     *   <div class="exercise-content">
-     *     <-- Code from templates/player-body.html -->
-     *     <div id="jaalPlayerModal" class="jaalModalContent">
-     *     </div>
-     *   </div>
-     * </div>
-     * The CSS class "modal-content" is from the Bootstrap library
-     * (http://getbootstrap.com). Even if the CSS for #jaalPlayerModal is:
-     *   { position: fixed; top: 30px; left: 30px; }
-     * the browser positions #jaalPlayerModal relative to .modal-content,
-     * not the browser window! Therefore the fixed position of #jaalPlayerModal
-     * must be recomputed when the modal is shown. This is what the code below
-     * does.
-     */
-     jaalModal.css('display', 'block');
-     var aplusModal = $('.modal-content');
-     var offset = jaalModal.offset();
-     const leftAdjust = - 0.5 * (jaalModal.width() - aplusModal.width());
-     const topAdjust = -30;
-     offset.left += leftAdjust;
-     offset.top += topAdjust;
-     jaalModal.offset(offset);
 
+    /* A+ LMS inserts an attribute "data-view-tag" in the <body> element
+     * depending on which Django view (page type) it is showing. */
+    switch($('body').attr('data-view-tag')) {
+      case "exercise":
+        /* Student's view of exercise.
+         * A+ LMS source code:
+         *   Repository: https://github.com/apluslms/a-plus/
+         *   File: exercise/templates/exercise/exercise.html */
+        showPlayerInExerciseView(jaalModal);
+        break;
+
+      case "inspect":
+        /* Course staff's or administrator's "Inspect submission" view.
+         * A+ LMS source code:
+         *   Repository: https://github.com/apluslms/a-plus/
+         *   File: exercise/templates/exercise/staff/inspect_submission.html */
+        showPlayerInInspectView(jaalModal);
+        break;
+    }
   }
   else {
     jaalModal.css('display', 'none');
   }
+}
+
+// Shows JSAV Player modal in the Exercise View of A+ LMS.
+function showPlayerInExerciseView(jaalModal) {
+  /* Assumption: the exercise recording and HTML references to the JSAV
+   * Exercise player are placed in A+ LMS like this:
+   * <div class="modal-content">
+   *   <div class="exercise-content">
+   *     <-- Code from templates/player-body.html -->
+   *     <div id="jaalPlayerModal" class="jaalModalContent">
+   *     </div>
+   *   </div>
+   * </div>
+   * The CSS class "modal-content" is from the Bootstrap library
+   * (http://getbootstrap.com). Even if the CSS for #jaalPlayerModal is:
+   *   { position: fixed; top: 30px; left: 30px; }
+   * the browser positions #jaalPlayerModal relative to .modal-content,
+   * not the browser window! Therefore the fixed position of #jaalPlayerModal
+   * must be recomputed when the modal is shown. This is what the code below
+   * does.
+   */
+   jaalModal.css('display', 'block');
+   var aplusModal = $('.modal-content');
+   var offset = jaalModal.offset();
+   offset.left -= 0.5 * (jaalModal.width() - aplusModal.width());
+   offset.top -= 30;
+   jaalModal.offset(offset);
+}
+
+// Shows JSAV Player modal in the Inspect Submission View of A+ LMS.
+function showPlayerInInspectView(jaalModal) {
+  jaalModal.css('display', 'block');
+  const body = $('body');
+  const topbar = $('nav.topbar');
+  var offset = jaalModal.offset();
+  offset.left += 0.5 * (body.width() - jaalModal.width());
+  offset.top += topbar.height();
+  jaalModal.offset(offset);
 }
 
 // Helper function for fitting a modal box inside page display area
