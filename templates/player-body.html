@@ -1,6 +1,13 @@
 <button type="button" id="show-player">Show player</button>
 
-<!-- <div id="jaalPlayerModal" class="jaalModal"> -->
+<!-- Inline <style> to ensure that #jaalPlayerModal will not become visible
+before exercise-player.css is loaded and applied. -->
+<style>
+#jaalPlayerModal {
+  display: none;
+}
+</style>
+
   <div id="jaalPlayerModal" class="jaalModalContent">
   <span class="jaal-close" id="close-player-modal">&times;</span>
 
@@ -90,4 +97,3 @@
   </div>
 
 </div> <!-- .jaalModalContent -->
-<!-- </div> --> <!-- #jaalPlayerModal -->
