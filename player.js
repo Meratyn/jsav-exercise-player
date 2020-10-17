@@ -199,6 +199,8 @@ function showPlayerInExerciseView(jaalModal) {
    * does.
    */
    jaalModal.css('display', 'block');
+   jaalModal.css('overflow', 'visible');
+   jaalModal.css('height', 'auto');
    var aplusModal = $('.modal-content');
    var offset = jaalModal.offset();
    offset.left -= 0.5 * (jaalModal.width() - aplusModal.width());
@@ -209,6 +211,11 @@ function showPlayerInExerciseView(jaalModal) {
 // Shows JSAV Player modal in the Inspect Submission View of A+ LMS.
 function showPlayerInInspectView(jaalModal) {
   jaalModal.css('display', 'block');
+  /* Here the JSAV Player modal is used without a Bootstrap modal.
+   * FIXME: the overflow and height must be set, because the Player modal
+   * doesn't scroll with the window. This is unfortunate. */
+  jaalModal.css('overflow', 'scroll');
+  jaalModal.css('height', '900px');
   const body = $('body');
   const topbar = $('nav.topbar');
   var offset = jaalModal.offset();

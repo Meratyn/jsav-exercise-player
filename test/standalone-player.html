@@ -30,7 +30,7 @@
   </style>
 
 </head>
-<body>
+<body data-view-tag="exercise">
 
 <h1>A+ page mockup</h1>
 
@@ -149,7 +149,14 @@ porttitor urna a bibendum.</p>
             Sait 0/34 pistettä vastauksestasi.
 <button type="button" id="show-player">Show player</button>
 
-<!-- <div id="jaalPlayerModal" class="jaalModal"> -->
+<!-- Inline <style> to ensure that #jaalPlayerModal will not become visible
+before exercise-player.css is loaded and applied. -->
+<style>
+#jaalPlayerModal {
+  display: none;
+}
+</style>
+
   <div id="jaalPlayerModal" class="jaalModalContent">
   <span class="jaal-close" id="close-player-modal">&times;</span>
 
@@ -239,7 +246,6 @@ porttitor urna a bibendum.</p>
   </div>
 
 </div> <!-- .jaalModalContent -->
-<!-- </div> --> <!-- #jaalPlayerModal -->
 </div>
 </div>
 </div>

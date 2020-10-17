@@ -1,0 +1,2 @@
+- Remove need of scrollbars in Inspect Submission view
+  player.js: showPlayerInInspectView(): the FIXME
