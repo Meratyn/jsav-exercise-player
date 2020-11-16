@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>JSON encoding test</title>
+</head>
+<body>
+<pre>
+<script>
+
+function recordingToBase64(recording) {
+
+  // 1. Convert JSON data into (Unicode) string
+  const jsonString = JSON.stringify(recording);
+  console.log('jsonString:' + jsonString);
+
+  // 2. Split the string into one byte pieces in the case it is UTF-16
+  const codeUnits = new Uint16Array(jsonString.length);
+  for (let i = 0; i < codeUnits.length; i++) {
+    codeUnits[i] = jsonString.charCodeAt(i);
+  }
+  console.log('codeUnits:' + codeUnits);
+  const byteArray = new Uint8Array(codeUnits.buffer);
+
+  const chunkLength = 16;
+  let safeString = "";
+  for (let i = 0; i < byteArray.length; i += chunkLength) {
+    let end_i = Math.min(i + chunkLength, byteArray.length);
+    safeString += String.fromCharCode(... byteArray.subarray(i, end_i));
+
+  }
+  // const safeString = String.fromCharCode(new Uint8Array(codeUnits.buffer));
+
+  // 3. Base64 encode the result to ensure the data does not break when
+  // it is transferred and stored into A+ LMS.
+  return btoa(safeString);
+}
+
+function parseBase64recording() {
+
+  // 1. Base64 decode the result.
+  const decoded = atob(window.JAALrecording);
+
+  // 2. Convert individual bytes into a UTF-16 string
+  const bytes = new Uint8Array(decoded.length);
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = decoded.charCodeAt(i);
+  }
+  const chunkLength = 16;
+  let jsonString = "";
+  for (let i = 0; i < bytes.length; i += chunkLength) {
+    let end_i = Math.min(i + chunkLength, bytes.length);
+    jsonString += String.fromCharCode(... bytes.subarray(i, end_i));
+
+  }
+  //const jsonString = String.fromCharCode(... new Uint16Array(bytes.buffer));
+
+  // Convert the UTF-16 string representation of JSON data into a JavaScript
+  // object.
+  return JSON.parse(jsonString);
+}
+
+window.JAALrecording = b64 = recordingToBase64({'message': 'häöl ☺ 𐌌'})
+document.write(window.JAALrecording);
+console.log(parseBase64recording());
+</script>
+</pre>
+</body>
+</html>

@@ -8,9 +8,22 @@ const animationView = require('./animation/animation-view.js');
 const modelAnswerView = require('./animation/model-answer-view.js');
 const jsonViewer = require('./json-viewer/index');
 
+// HTML Entity encoder/decoder library. https://github.com/mathiasbynens/he
+const he = require('he');
+
 let modalPositioned = false;
 
 initialize();
+
+function parseEscapedRecording() {
+  // 1. Convert from Base64 to string
+  const decoded = atob(global.JAALrecording);
+  // 2. Unescape HTML entities
+  const unescaped = he.decode(decoded);
+  // 3. Parse the string as JSON
+  const parsed = JSON.parse(unescaped);
+  return parsed;
+}
 
 async function initialize() {
   try {
@@ -18,8 +31,10 @@ async function initialize() {
     console.warn(`Failed setting button images: ${err}`);
   }
   try {
-    if (globalThis.JAALrecording && Object.keys(globalThis.JAALrecording).length > 0) {
-      let submission = global.JAALrecording;
+    if (globalThis.JAALrecording &&
+        Object.keys(globalThis.JAALrecording).length > 0)
+    {
+      let submission = parseEscapedRecording();
       initializeAnimationView(submission, false);
       initializeModelAnswerView(submission);
       setClickHandlers(submission)
