@@ -6,6 +6,9 @@ Since the Exercise Player uses certain HTML elements to construct the animation,
 
 ![](./Exercise_Player-process.png)
 
+## Install submodules
+`git submodules init`
+
 ## To run the tests
 The tests are written with Jest. To run the tests do this directory:
 - `git checkout master`.
