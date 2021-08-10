@@ -51,6 +51,7 @@ function initializeAnimation(initialStateHTML, animationSteps, canvas) {
     });
     $stopButton.on('click', () => {
       animation.stop();
+			$playPauseButton.text('Play')
       $playPauseButton.removeClass("pause");
       $('#to-beginning').click();
     });
