@@ -28,9 +28,15 @@ function initializeAnimation(initialStateHTML, animationSteps, canvas) {
   }
   try {
     $playPauseButton.on('click', () => {
-      if(animation.isPaused()) animation.play($speedInput);
-      else animation.pause();
-      $playPauseButton.toggleClass("pause");
+      if(animation.isPaused()) { 
+				animation.play($speedInput); 
+				$playPauseButton.text('Pause')
+			}
+      else { 
+				animation.pause(); 
+				$playPauseButton.text('Play')
+				$playPauseButton.toggleClass("pause");
+			}
     });
     $stopButton.on('click', () => {
       animation.stop();
