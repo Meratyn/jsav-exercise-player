@@ -13,9 +13,17 @@ To compile and run the software, you will need:
 - [Node.js](https://nodejs.org/en/)
 - [Browserify](http://browserify.org/)
 
+- Load the G. Mariani's JSON viewer as git submodule:
+
+```
+git submodule init
+git submodule update
+```
+
 ## git branches
 
-`jaal1.1` is the 2022 development branch.
+`jaal1.1` is the 2022 development branch based on
+[JAAL 1.1 rc2 specification](https://github.com/Aalto-LeTech/JAAL/releases/tag/1.1rc2).
 
 `master` is the old development branch.
 
