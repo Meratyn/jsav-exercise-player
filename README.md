@@ -15,7 +15,9 @@ To compile and run the software, you will need:
 
 ## git branches
 
-`master` is the main development branch.
+`jaal1.1` is the 2022 development branch.
+
+`master` is the old development branch.
 
 `traky` is integration work for Data Structures and Algorithms Y (DSA Y) course.
 This version of JSAV Exercise player does not handle communication with the
