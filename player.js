@@ -38,29 +38,37 @@ async function initialize() {
         Object.keys(globalThis.JAALrecording).length > 0)
     {
       let submission = parseEscapedRecording();
-      initializeAnimationView(submission, false);
-      initializeModelAnswerView(submission);
-      setClickHandlers(submission)
+      loadJsonSubmission(null, submission);
     } else {
       // Assume test bench built on static web page without A+ LMS.
       console.log('No animation data received. Assuming test bench.');
       $("body").on("jsav-exercise-recorder-test-submit",
-        function(event, param1, param2) {
-          console.log("JAAL submission received:", param1);
-        });
+        loadJsonSubmission);
     }
   } catch (err) {
     console.warn(err)
   }
 }
 
-function loadJsonSubmission(event, jaalSubmission) {
+/*
+ * Loads JAAL data as a JavaScript object into the JSAV Exercise Player.
+ *
+ * Parameters:
+ * event: a browser event
+ * submission: the JAAL data as a JavaScript object
+ *
+ * Parameter "event" is used if loadSubmission called on a browser event.
+ */
+function loadJsonSubmission(event, submission) {
   console.log("Loading submission, assuming JAAL 1.1.")
-  if (jaalSubmission === undefined) {
+  if (submission === undefined) {
     console.error("No JAAL submission found!");
+    return
   }
-  console.log("Metadata of JAAL submission: ", jaalSubmission['metadata']);
-
+  console.log("Metadata of JAAL submission: ", submission['metadata']);
+  initializeAnimationView(submission, false);
+  initializeModelAnswerView(submission);
+  setClickHandlers(submission);
 }
 
 function initializeAnimationView(submission, detailed) {
