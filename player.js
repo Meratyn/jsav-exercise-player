@@ -7,6 +7,7 @@ const { DOMSlideShow } = require('./animation/slideShow.js');
 const animationView = require('./animation/animation-view.js');
 const modelAnswerView = require('./animation/model-answer-view.js');
 const jsonViewer = require('./json-viewer/index');
+const version = require('./utils/version');
 
 // HTML Entity encoder/decoder library. https://github.com/mathiasbynens/he
 const he = require('he');
@@ -60,12 +61,22 @@ async function initialize() {
  * Parameter "event" is used if loadSubmission called on a browser event.
  */
 function loadJsonSubmission(event, submission) {
-  console.log("Loading submission, assuming JAAL 1.1.")
+  console.log("Loading submission.")
   if (submission === undefined) {
     console.error("No JAAL submission found!");
     return
   }
   console.log("Metadata of JAAL submission: ", submission['metadata']);
+
+  const recVersion = submission['metadata']['recorderVersion'];
+  if (recVersion == version) {
+    console.log("JAAL Recorder and Player versions match, good! Version is",
+    version)
+  }
+  else {
+    console.warn("JAAL Recorder version is", recVersion,
+      ", but Player version is", version, ". Something might break.");
+  }
   initializeAnimationView(submission, false);
   initializeModelAnswerView(submission);
   setClickHandlers(submission);

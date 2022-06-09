@@ -1,13 +1,13 @@
 {
   "name": "jsav-player-client",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Application to replay algorithm visualization exercises",
   "main": "player.js",
   "scripts": {
     "start": "nohup chromium-browser player.html &>/dev/null &",
     "test": "jest --watch --verbose",
     "lint": "npx eslint --fix .",
-    "build": "browserify player.js > build/jsav-exercise-player-bundle.js"
+    "build": "npx genversion > utils/version.js && browserify player.js > build/jsav-exercise-player-bundle.js"
   },
   "keywords": [
     "jsav"
@@ -25,6 +25,7 @@
     "jest": "^28.1.0"
   },
   "dependencies": {
+    "genversion": "^3.1.1",
     "he": "^1.2.0"
   }
 }
