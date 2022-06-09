@@ -1,0 +1,253 @@
+/* The main modal (pop-up) box for JSAV exercise player. All player-related
+ * content is inside this <div> element. */
+#jaalPlayerModal {
+  /* position: fixed;
+  top: 5px;
+  left: 0px; */
+  width: 1200px;
+  min-height: 800px;
+  /* The following rules mimick a bootstrap.js styled
+   * .modal-dialog used in A+ LMS. */
+  background: #FFF;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 6px;
+  /* box-shadow: 0 5px 15px rgba(0,0,0,.5); */
+}
+
+/* JSAV and OpenDSA specific modifications for JSAV Exercise Player.
+ * The #jaalPlayerModal selector ensures that style rules given here only
+ * affect the JSAV Exercise Player and not anything outside it.
+ */
+
+#jaalPlayerModal #jsavcontainer {
+  height: max-content;
+  border: khaki 2px solid;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+#jaalPlayerModal .jsavvaluelabel {
+  font-size: xx-small !important;
+}
+
+#jaalPlayerModal .jsavautoresize .jsavnode {
+  min-width: 30px !important;
+  /* background-color: transparent; */
+}
+
+#jaalPlayerModal .jsavline {
+  height: 38px;
+}
+
+#jaalPlayerModal .jsavcanvas {
+  min-width: 200px !important;
+  margin: 5px;
+}
+
+#jaalPlayerModal .jsavcanvas svg,
+#jaalPlayerModal .jsavedgelabel {
+  z-index: 1;
+}
+
+#jaalPlayerModal .jsavcanvas > svg {
+  display: none;
+}
+
+#jaalPlayerModal .jsavcanvas > svg text {
+  display: block;
+}
+
+#jaalPlayerModal .jsavcanvas > svg rect {
+  display: block;
+}
+
+#jaalPlayerModal .jsavtree,
+#jaalPlayerModal .jsavcommontree,
+#jaalPlayerModal .jsavautoresize,
+#jaalPlayerModal .jsavbinarytree {
+  left: 0px !important;
+  margin: auto;
+}
+
+/* JSAV Exercise Player specific CSS */
+
+/* Grey shade over other elements on the page. The actual modal box is
+ * inside this. */
+#jaalPlayerModal .jaalModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top of other modals*/
+  left: 0;
+  top: 0px;
+  width: 1200px; /* Full width */
+  height: 1200px; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#jaalPlayerModal .jaalModalContent {
+  background-color: #fefefe;
+  margin: 0; /* 5% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  /* width: 80%; */ /* Could be more or less, depending on screen size */
+}
+
+#jaalPlayerModal .selected {
+  background-color: yellow !important;
+}
+
+#jaalPlayerModal .views-container {
+  display: flex;
+  justify-content: center;
+}
+
+#jaalPlayerModal .import-export,
+#jaalPlayerModal .final-grade,
+#jaalPlayerModal .jsavoutput,
+#jaalPlayerModal .player-controls,
+#jaalPlayerModal .view-control,
+#jaalPlayerModal .model-answer,
+#jaalPlayerModal .slide-show,
+#jaalPlayerModal .compare-view,
+#jaalPlayerModal .detailed-view {
+  text-align: center;
+  margin: 2px;
+}
+
+#jaalPlayerModal .jsavoutput .jsavtitle {
+  margin: 5px;
+}
+
+#jaalPlayerModal .jsavtitle {
+  margin-bottom: 10px !important;
+  font-size: xx-large !important;
+}
+
+#jaalPlayerModal .instructions-div {
+  margin: 2px 20%;
+  background-color: lightblue;
+  padding: 1px 10px;
+  border-radius: 5px;
+}
+
+#jaalPlayerModal .animation-view,
+#jaalPlayerModal .model-answer-view {
+  width: 600px;
+  border: solid 1px black;
+  margin: 2px;
+  padding: 2px;
+}
+
+#jaalPlayerModal #show-player {
+  margin: 0.5%;
+}
+
+#jaalPlayerModal .auto-animation {
+  display: flex;
+  justify-content: center;
+}
+
+#jaalPlayerModal animation-stop {
+  border: 2px solid white;
+}
+
+#jaalPlayerModal .animation-button {
+  background-color: #202020;
+  box-shadow: 2px 5px #888888;
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+  cursor: pointer;
+}
+
+#jaalPlayerModal .animation-stop:hover {
+  background-color: #404040;
+}
+
+#jaalPlayerModal .animation-play-pause {
+  border-top: 15px solid transparent;
+  border-left: 30px solid #202020;
+  border-bottom: 15px solid transparent;
+  border-right: 0px;
+  background-color: transparent;
+  transition: 100ms all ease;
+}
+
+#jaalPlayerModal .animation-play-pause.pause {
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border-top: 0px white;
+  border-left: 10px solid #202020;
+  border-bottom: 0px white;
+  border-right: 10px solid #202020;
+}
+
+#jaalPlayerModal .animation-play-pause.pause:hover {
+  background-color: transparent;
+  border-left: 10px solid #404040;
+  border-right: 10px solid #404040;
+}
+
+#jaalPlayerModal .animation-play-pause:hover {
+  border-color: transparent transparent transparent #404040;
+}
+
+#jaalPlayerModal p {
+  margin: 5px !important;
+}
+
+#jaalPlayerModal #model-answer path {
+display: none;
+}
+
+#jaalPlayerModal #speed {
+  width: 200px;
+  display: inline;
+}
+
+#jaalPlayerModal .selected {
+  background: #9d9d9d;
+}
+
+#jaalPlayerModal .no-data {
+  text-align: center;
+}
+
+#jaalPlayerModal .model-answer {
+  min-height: 350px;
+}
+
+
+
+/* A Close button. This must be named with `jaal-` because the Bootstrap
+ * library also has a `close` class. */
+#jaalPlayerModal .jaal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  display: block;
+  margin-right: 9px;
+}
+
+#jaalPlayerModal .jaal-close:hover,
+#jaalPlayerModal .jaal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#jaalPlayerModal #jaalTreeContent,
+#jaalPlayerModal #animation-container,
+#jaalPlayerModal #model-answer-container {
+  overflow: scroll;
+}
+
+#jaalPlayerModal #model-step-number,
+#jaalPlayerModal #student-step-number {
+  min-width: 64px;
+  display: inline-block;
+}
