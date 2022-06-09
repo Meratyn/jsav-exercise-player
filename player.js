@@ -26,11 +26,14 @@ function parseEscapedRecording() {
 }
 
 async function initialize() {
+  console.log("Player main initialization function")
   try {
   } catch (err) {
     console.warn(`Failed setting button images: ${err}`);
   }
   try {
+    // JAAL 1.0 A+ LMS setup: JAAL recording is embedded on the web page
+    // as global variable JAALrecording.
     if (globalThis.JAALrecording &&
         Object.keys(globalThis.JAALrecording).length > 0)
     {
@@ -39,11 +42,25 @@ async function initialize() {
       initializeModelAnswerView(submission);
       setClickHandlers(submission)
     } else {
-      console.warn('No animation data received')
+      // Assume test bench built on static web page without A+ LMS.
+      console.log('No animation data received. Assuming test bench.');
+      $("body").on("jsav-exercise-recorder-test-submit",
+        function(event, param1, param2) {
+          console.log("JAAL submission received:", param1);
+        });
     }
   } catch (err) {
     console.warn(err)
   }
+}
+
+function loadJsonSubmission(event, jaalSubmission) {
+  console.log("Loading submission, assuming JAAL 1.1.")
+  if (jaalSubmission === undefined) {
+    console.error("No JAAL submission found!");
+  }
+  console.log("Metadata of JAAL submission: ", jaalSubmission['metadata']);
+
 }
 
 function initializeAnimationView(submission, detailed) {
