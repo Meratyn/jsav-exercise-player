@@ -12,6 +12,9 @@ const version = require('./utils/version');
 // HTML Entity encoder/decoder library. https://github.com/mathiasbynens/he
 const he = require('he');
 
+// Variable to keep track of whether the handlers have been set yet or not. 
+var handlersSet = false;
+
 let modalPositioned = false;
 
 initialize();
@@ -68,7 +71,7 @@ function loadJsonSubmission(event, submission) {
   }
   console.log("Metadata of JAAL submission: ", submission['metadata']);
 
-  const recVersion = submission['metadata']['recorderVersion'];
+  const recVersion = submission['metadata']['jaalVersion'];
   if (recVersion == version) {
     console.log("JAAL Recorder and Player versions match, good! Version is",
     version)
@@ -79,11 +82,21 @@ function loadJsonSubmission(event, submission) {
   }
   initializeAnimationView(submission, false);
   initializeModelAnswerView(submission);
-  setClickHandlers(submission);
+  if (!handlersSet) {
+    setClickHandlers(submission);
+  }
 }
 
+/**
+ * Initialise the animation view of the student steps. 
+ * Get the initial state and the model steps, 
+ * then initialise the animation and slide show. 
+ * @param submission JSON submission data
+ * @param detailed boolean to indicate whether to get the 
+ * detailed or the condensed animation steps. 
+ */
 function initializeAnimationView(submission, detailed) {
-  const initialStateHTML = submission.initialState.animationHTML;
+  const initialStateHTML = submission.initialState.svg;
   const animationSteps = getAnimationSteps(submission,detailed);
   const canvas = {
     animationCanvas: $('#animation-container')[0],
@@ -94,10 +107,15 @@ function initializeAnimationView(submission, detailed) {
   animationView.initializeAnimation(initialStateHTML, animationSteps, canvas);
 }
 
+/**
+ * Initialise the model answer view. Get the model answer steps with svg data, 
+ * and the initial state. Initialise the slide show and the animation. 
+ * @param submission JSON submission data
+ */
 function initializeModelAnswerView(submission) {
   const modelAnswer = submission.definitions.modelAnswer;
-  if (modelAnswer.steps.length > 0) {
-      var initialStateHTML = getModelAnswerInitialHTML(modelAnswer);
+  if (modelAnswer.length > 0) {
+    var initialStateHTML = getModelAnswerInitialHTML(modelAnswer);
   } else {
     $('#model-answer-container').html('<h3>No model answer data</h3>');
     return;
@@ -112,9 +130,18 @@ function initializeModelAnswerView(submission) {
   modelAnswerView.initializeAnimation(initialStateHTML, animationSteps, canvas);
 }
 
+/**
+ * Get the animation steps from the submission, optionally filtered for only
+ * those of type click. 
+ * @param submission JSON of the submission in JAAL 1.1
+ * @param detailed boolean to indicate whether the full list of steps is 
+ * wanted or only the ones with clicks. 
+ * @returns all the steps in the detailed case, 
+ *  otherwise only the steps with clicks
+ */
 function getAnimationSteps(submission, detailed) {
   try {
-    var gradableSteps = submission.animation.filter(step => step.type === 'gradeable-step');
+    var gradableSteps = submission.animation.filter(step => step.type === 'click');
     var allSteps = submission.animation.filter(step => !step.type.includes('grad'));;
   } catch (err) {
     console.warn(`Failed getting animation steps: ${err}`);
@@ -122,23 +149,31 @@ function getAnimationSteps(submission, detailed) {
   return detailed? allSteps : gradableSteps;
 }
 
+/**
+ * Get the initial state of the model Answer, which is stored at index 1. 
+ * @param modelAnswer list containing all the model answer steps
+ * @returns svg if it is present, otherwise undefined
+ */
 function getModelAnswerInitialHTML(modelAnswer) {
-  const counterHTML = modelAnswer.steps[0].html.counterHTML;
-  const outputHTML = modelAnswer.steps[0].html.outputHTML;
-  const canvasHTML = modelAnswer.steps[0].html.canvasHTML;
-  return counterHTML + outputHTML + canvasHTML;
+  return ((modelAnswer.length > 1) ? modelAnswer[1].svg : undefined);
 }
 
+/**
+ * Filter the modelAnswer to get only the steps that have the type click. 
+ * @param modelAnswer list of modelAnswer steps 
+ * @returns a list of the modelAnswer steps with type click. 
+ */
 function getModelAnswerSteps(modelAnswer) {
-  const animationSteps = modelAnswer.steps.map((step, i) => {
-    animationHTML = step.html.counterHTML + step.html.outputHTML + step.html.canvasHTML;
-    return { type: '', animationHTML };
-  });
-  animationSteps.shift();
-  return animationSteps;
+  // modelAnswer.shift();
+  return modelAnswer.filter(step => step.type === 'click');
 }
 
+/**
+ * Set the click handlers for the buttons on the page. 
+ * @param submission JAAL 1.1 submission data
+ */
 function setClickHandlers(submission) {
+  handlersSet = true;
   $('#show-player').click(togglePlayer);
   $('#close-player-modal').click(togglePlayer);
 
@@ -159,7 +194,7 @@ function setClickHandlers(submission) {
     $('.compare-view').toggle();
     $('.model-answer-view > .view-control').toggle();
     $('#compare-view-button').attr({'disabled': false});
-    $('#model-answer-container').html('<h3>Model answer steps visulized during the exercise</h3>');
+    $('#model-answer-container').html('<h3>Model answer steps visualised during the exercise</h3>');
     $('#animation-container').html('');
     initializeAnimationView(submission,true);
   });
