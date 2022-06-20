@@ -8,6 +8,7 @@ const animationView = require('./animation/animation-view.js');
 const modelAnswerView = require('./animation/model-answer-view.js');
 const jsonViewer = require('./json-viewer/index');
 const version = require('./utils/version');
+const { Formatter, EolStyle } = require("fracturedjsonjs");
 
 // HTML Entity encoder/decoder library. https://github.com/mathiasbynens/he
 const he = require('he');
@@ -327,12 +328,20 @@ function fitInnerMeasure(pageMeasure, modalMeasure, desiredOffset) {
 function showJaal(submission) {
   const modal = $('#jaalTreeModal');
   modal.css('display', 'block');
-  $('#show-jaal').on('click', () => {
-    const htmlToString = $('#html-to-string').prop('checked');
-    const modalContent = jsonViewer.jsonToHTML(submission)(true)(htmlToString);
-    $("#jaalTreeContent").html(modalContent);
-    jsonViewer.setClickListeners();
-  })
+  modal.css("z-index", "1000");
+  const sub = JSON.parse(JSON.stringify(submission, 
+              function(key, value) {
+                if (key === "image" || key === "svg") {
+                  return "SVG (" +  (new TextEncoder().encode(value)).length
+                       + " bytes)";
+                } 
+                return value;
+              }, 2));
+  const formatter = new Formatter();
+  formatter.maxInlineLength = 50;
+  $("#jaalTreeContent").html(formatter.serialize(sub))
+  $("#jaalTreeContent").css("white-space", "pre-wrap");  
+  $("#jaalTreeModal").css("height", $(window).height());
   const close = $('#jaalTreeModal-close');
   close.on('click', () => modal.css('display', 'none'));
 }
