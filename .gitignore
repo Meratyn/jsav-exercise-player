@@ -2,4 +2,3 @@ node_modules
 nohup.out
 .env.js
 package-lock.json
-testbench/OpenDSA/lib/jsav-exercise-player-bundle.js
