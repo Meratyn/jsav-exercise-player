@@ -7,14 +7,31 @@
     "start": "nohup chromium-browser player.html &>/dev/null &",
     "test": "jest --watch --verbose",
     "lint": "npx eslint --fix .",
-    "build": "npx genversion > utils/version.js && browserify player.js > build/jsav-exercise-player-bundle.js"
+    "build": "npx genversion utils/version.js && browserify player.js > build/jsav-exercise-player-bundle.js"
   },
   "keywords": [
     "jsav"
   ],
-  "author": "Giacomo Mariani and Artturi Tilanterä",
+  "contributors": [
+    {
+      "name": "Giacomo Mariani",
+      "email": "giacomo.mariani@aalto.fi",
+      "url:": "https://github.com/MarianiGiacomo/"
+    },
+    {
+      "name": "Johanna Sänger",
+      "email": "johanna.sanger@aalto.fi",
+      "url": "https://github.com/Meratyn/"
+    },
+    {
+      "name": "Artturi Tilanterä",
+      "email": "artturi.tilantera@iki.fi",
+      "url": "https://github.com/atilante/"
+    }
+  ],
   "license": "ISC",
   "devDependencies": {
+    "browserify": "^17.0.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-standard": "^14.1.0",
@@ -22,10 +39,11 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^28.1.0"
+    "jest": "^28.1.0",
+    "genversion": "^3.1.1"
   },
   "dependencies": {
-    "genversion": "^3.1.1",
-    "he": "^1.2.0"
+    "he": "^1.2.0",
+    "npm": "^8.13.2"
   }
 }
