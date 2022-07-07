@@ -4,7 +4,7 @@
   /* position: fixed;
   top: 5px;
   left: 0px; */
-  width: 1200px;
+  width: 1800px;
   min-height: 800px;
   /* The following rules mimick a bootstrap.js styled
    * .modal-dialog used in A+ LMS. */
@@ -41,6 +41,7 @@
 
 #jaalPlayerModal .jsavcanvas {
   min-width: 200px !important;
+  height: 550px;
   margin: 5px;
 }
 
@@ -134,7 +135,7 @@
 
 #jaalPlayerModal .animation-view,
 #jaalPlayerModal .model-answer-view {
-  width: 600px;
+  width: 900px;
   border: solid 1px black;
   margin: 2px;
   padding: 2px;
