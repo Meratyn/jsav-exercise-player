@@ -115,7 +115,7 @@ function initializeAnimationView(submission, detailed) {
 function initializeModelAnswerView(submission) {
   const modelAnswer = submission.definitions.modelAnswer;
   if (modelAnswer.length > 0) {
-    var initialStateHTML = getModelAnswerInitialHTML(modelAnswer);
+    var initialStateHTML = submission.initialState.modelSvg;
   } else {
     $('#model-answer-container').html('<h3>No model answer data</h3>');
     return;
@@ -164,8 +164,8 @@ function getModelAnswerInitialHTML(modelAnswer) {
  * @returns a list of the modelAnswer steps with type click. 
  */
 function getModelAnswerSteps(modelAnswer) {
-  // modelAnswer.shift();
-  return modelAnswer.filter(step => step.type === 'click');
+  modelAnswer = modelAnswer.flat();
+  return modelAnswer.filter(step => step.gradable === true);
 }
 
 /**
