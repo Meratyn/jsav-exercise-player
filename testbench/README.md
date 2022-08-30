@@ -61,3 +61,9 @@ The JSAV-based visual algorithm simulation exercises are bound to the
    jquery.transit and raphael.
 - `OpenDSA/lib` contains JS libraries common to OpenDSA, and JS libraries
    jQuery and jQuery-UI.
+
+## Symbolic links
+
+File testbench/OpenDSA/lib/jsav-exercise-player-bundle.js is a
+symbolic link to build/jsav-exercise-player-bundle.js. This saves some disk
+(and git repository) space.
